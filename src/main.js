@@ -3,10 +3,12 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+/* eslint-disable no-unused-vars */
+import world from './directive/directive.js';
 
-// import './assets/bootstrap-3.3.6-dist/css/bootstrap.min.css'
-// import './assets/bootstrap-3.3.6-dist/css/layoutit.css'
-// import './assets/bootstrap-3.3.6-dist/js/bootstrap.min.js'
+// 引入echarts
+import echarts from 'echarts';
+Vue.prototype.$echarts = echarts;
 
 Vue.config.productionTip = false;
 

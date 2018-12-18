@@ -207,6 +207,7 @@ $(document).ready(function () {
         opacity: .35,
         connectWith: ".column"
       })
+      alert("lyrow");
     }
   });
   $(".sidebar-nav .box").draggable({
