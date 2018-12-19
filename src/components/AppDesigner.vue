@@ -186,7 +186,6 @@
     mounted: function () {
       this.$nextTick(function () {
         /* eslint-disable no-unused-vars */
-        var uuid = 'mount-' + UUID.create();
         // this.update();
         // const strs = '<div v-world:wbs17022.hehe.haha id="mount-point">惺惺惜惺惺</div>';
         // var MyComponent = Vue.extend({
@@ -199,6 +198,7 @@
           helper: 'clone',
           handle: '.drag',
           start: function (e, t) {
+            var uuid = 'mount-' + UUID.create();
             $(t.helper.context).find('div.uid').attr('id', uuid);
           },
           drag: function (e, t) {
@@ -210,18 +210,23 @@
               connectWith: '.column'
             });
             let tmpuuid = $(t.helper.context).find('div.uid').attr('id');
+            console.log('============' + tmpuuid);
             console.info(t.helper.context);
-            if (tmpuuid) {
-              console.log('============' + tmpuuid);
+            // if (tmpuuid) {
               let timestamp = Date.parse(new Date());
-              let strs = `<div><div id="xxxx">${timestamp}</div></div>`;
-              let MyComponent = Vue.extend({
-                template: strs
-              });
-              new MyComponent().$mount('#' + tmpuuid);
-              console.info('已经更新完毕');
+              let strs = `<div><div id="xxxx">{{msg}}</div></div>`;
+              // let MyComponent = Vue.extend({
+              //   data () {
+              //     return {
+              //       msg: timestamp
+              //     };
+              //   },
+              //   template: strs
+              // });
+              // new MyComponent().$mount('#' + tmpuuid);
+              // console.info('已经更新完毕');
             }
-          }
+          // }
         });
       });
     }
