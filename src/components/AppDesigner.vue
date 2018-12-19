@@ -90,7 +90,7 @@
                   <div class="view">
                     <div class="row clearfix">
                       <div class="col-md-12 column">
-                        <div class="uid" name="xxx"></div>
+                        <div class="uid"></div>
                       </div>
                     </div>
                   </div>
@@ -154,7 +154,8 @@
     data() {
       return {  // 普通属性国际化切换无效果
         chart: '<v-barchart></v-barchart>',
-        chart2: '<div v-world:wbs17022.hehe.haha></div>'
+        chart2: '<div v-world:wbs17022.hehe.haha></div>',
+        uid: '222'
       };
     },
     methods: {
@@ -182,24 +183,42 @@
         return this.$t('brands.nike');
       }
     },
-    components: { barchart },
-    mounted: function () {
-      this.$nextTick(function () {
-        /* eslint-disable no-unused-vars */
-        // this.update();
-        // const strs = '<div v-world:wbs17022.hehe.haha id="mount-point">惺惺惜惺惺</div>';
-        // var MyComponent = Vue.extend({
-        //   template: strs
+    components: {barchart},
+    watch: {
+      uid(newName, oldName) {
+        console.log('newName:' + newName + ' oldName:' + oldName);
+        // $(this.$el).find('div.uid').attr('id', newName);
+        // this.$nextTick(() => {
+        //   const strs = `<div><div>${newName}</div></div>`;
+        //   // var MyComponent = Vue.extend({
+        //   //   template: strs
+        //   // });
+        //   // new MyComponent().$mount('#mount-point');
+        //   /* eslint-disable no-new */
+        //   new Vue({
+        //     el: '#' + newName,
+        //     template: strs
+        //   });
         // });
-        // new MyComponent().$mount('#mount-point2');
+      }
+    },
+    mounted: function () {
+      /* eslint-disable no-unused-vars */
+      // this.update();
+      // const strs = '<div v-world:wbs17022.hehe.haha id="mount-point">惺惺惜惺惺</div>';
+      // var MyComponent = Vue.extend({
+      //   template: strs
+      // });
+      // new MyComponent().$mount('#mount-point2');
+      const self = this;
 
+      this.$nextTick(function () {
         $('.sidebar-nav .lyrow').draggable({
           connectToSortable: '.demo',
           helper: 'clone',
           handle: '.drag',
           start: function (e, t) {
-            var uuid = 'mount-' + UUID.create();
-            $(t.helper.context).find('div.uid').attr('id', uuid);
+            t.helper.width(400);
           },
           drag: function (e, t) {
             t.helper.width(400);
@@ -209,23 +228,29 @@
               opacity: 0.35,
               connectWith: '.column'
             });
-            let tmpuuid = $(t.helper.context).find('div.uid').attr('id');
-            console.log('============' + tmpuuid);
-            console.info(t.helper.context);
+            var uuid = 'mount-' + UUID.create();
+            console.log(t.helper.context);
+            console.log('============' + $(t.helper.context).find('.ui-sortable .uid').append('<div>xxxxxxxxx</div>').attr('class'));
+            console.log('============' + uuid);
+            self.$data.uid = uuid;
+            console.log('------------' + self.$data.uid);
+            // this.$data.uid = tmpuuid;
+            // Vue.set(this.$data, 'uid', tmpuuid);
+            // console.info(t.helper.context);
             // if (tmpuuid) {
-              let timestamp = Date.parse(new Date());
-              let strs = `<div><div id="xxxx">{{msg}}</div></div>`;
-              // let MyComponent = Vue.extend({
-              //   data () {
-              //     return {
-              //       msg: timestamp
-              //     };
-              //   },
-              //   template: strs
-              // });
-              // new MyComponent().$mount('#' + tmpuuid);
-              // console.info('已经更新完毕');
-            }
+            //   let timestamp = Date.parse(new Date());
+            //   let strs = `<div><div id="xxxx">{{msg}}</div></div>`;
+            // let MyComponent = Vue.extend({
+            //   data () {
+            //     return {
+            //       msg: timestamp
+            //     };
+            //   },
+            //   template: strs
+            // });
+            // new MyComponent().$mount('#' + tmpuuid);
+            // console.info('已经更新完毕');
+          }
           // }
         });
       });
