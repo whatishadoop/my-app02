@@ -8,6 +8,9 @@ function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
 
+// 在开头引入webpack，后面的plugins那里需要
+var webpack = require('webpack')
+
 module.exports = {
   context: path.resolve(__dirname, '../'),
   entry: {

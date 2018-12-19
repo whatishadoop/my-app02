@@ -8,7 +8,7 @@
           <span class="glyphicon-bar"></span>
         </button>
         <a class="navbar-brand" href="#">
-          <img src="img/favicon.png">
+          <!--<img src="img/favicon.png">-->
           Dwepapp
         </a>
       </div>
@@ -23,7 +23,7 @@
               <a class="btn btn-xs btn-primary active" href="./en"><i class="glyphicon-globe glyphicon"></i>
                 中文/英文
               </a>
-              <button role="button" data-toggle="modal" data-target="#feedbackModal" id="feedback"
+              <button @click="changeLocale" role="button" data-toggle="modal" data-target="#feedbackModal" id="feedback"
                       class="btn btn-xs btn-primary active"><i class="glyphicon-comment glyphicon"></i>
                 帮助文档
               </button>
@@ -69,7 +69,6 @@
         <div class="">
           <!--左侧组件工具栏-->
           <div class="sidebar-nav">
-
             <ul class="nav nav-list accordion-group">
               <li class="nav-header">
                 <i class="glyphicon-plus glyphicon"></i>
@@ -90,7 +89,9 @@
                     <input value="12" class="form-control" type="text"></div>
                   <div class="view">
                     <div class="row clearfix">
-                      <div class="col-md-12 column"></div>
+                      <div class="col-md-12 column">
+                        <div class="uid" name="xxx"></div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -146,6 +147,7 @@
 
 <script type="text/ecmascript-6">
   import Vue from 'vue';
+  import UUID from 'uuid-js';
   import barchart from 'components/chart/barchart';
 
   export default {
@@ -156,38 +158,73 @@
       };
     },
     methods: {
-    update() {
-      const strs = '<div><div v-world:wbs17022.hehe.haha id="mount-point"></div> 惺惺惜惺惺</div>';
-      var MyComponent = Vue.extend({
-        template: strs
-      });
-      new MyComponent().$mount('#mount-point2');
-      console.info('已经更新完毕');
+      update() {
+        const strs = '<div><div v-world:wbs17022.hehe.haha id="mount-point"></div> 惺惺惜惺惺</div>';
+        var MyComponent = Vue.extend({
+          template: strs
+        });
+        new MyComponent().$mount('#mount-point2');
+        console.info('已经更新完毕');
+      },
+      changeLocale() {
+        this.$nextTick(function () {
+          const strs = `<div><div id="xxxx">惺惺惜惺惺</div></div>`;
+          let MyComponent = Vue.extend({
+            template: strs
+          });
+          new MyComponent().$mount('#mount-point3');
+          console.info('已经更新完毕');
+        });
+      }
     },
-    changeLocale() {
-      // registerComponent(templateName) {
-      var Profile = Vue.extend(barchart);
-      // 创建 Profile 实例，并挂载到一个元素上。
-      new Profile().$mount('#mount-point');
-      let locale = this.$i18n.locale;
-      locale === 'zh' ? this.$i18n.locale = 'en' : this.$i18n.locale = 'zh';
+    computed: {
+      nike() {  // js中引用国际化放在计算属性中
+        return this.$t('brands.nike');
+      }
+    },
+    components: { barchart },
+    mounted: function () {
+      this.$nextTick(function () {
+        /* eslint-disable no-unused-vars */
+        var uuid = 'mount-' + UUID.create();
+        // this.update();
+        // const strs = '<div v-world:wbs17022.hehe.haha id="mount-point">惺惺惜惺惺</div>';
+        // var MyComponent = Vue.extend({
+        //   template: strs
+        // });
+        // new MyComponent().$mount('#mount-point2');
+
+        $('.sidebar-nav .lyrow').draggable({
+          connectToSortable: '.demo',
+          helper: 'clone',
+          handle: '.drag',
+          start: function (e, t) {
+            $(t.helper.context).find('div.uid').attr('id', uuid);
+          },
+          drag: function (e, t) {
+            t.helper.width(400);
+          },
+          stop: function (e, t) {
+            $('.demo .column').sortable({
+              opacity: 0.35,
+              connectWith: '.column'
+            });
+            let tmpuuid = $(t.helper.context).find('div.uid').attr('id');
+            console.info(t.helper.context);
+            if (tmpuuid) {
+              console.log('============' + tmpuuid);
+              let timestamp = Date.parse(new Date());
+              let strs = `<div><div id="xxxx">${timestamp}</div></div>`;
+              let MyComponent = Vue.extend({
+                template: strs
+              });
+              new MyComponent().$mount('#' + tmpuuid);
+              console.info('已经更新完毕');
+            }
+          }
+        });
+      });
     }
-  },
-  computed: {
-    nike() {  // js中引用国际化放在计算属性中
-      return this.$t('brands.nike');
-    }
-  },
-  mounted: function () {
-    this.$nextTick(function () {
-      // this.update();
-      // const strs = '<div v-world:wbs17022.hehe.haha id="mount-point">惺惺惜惺惺</div>';
-      // var MyComponent = Vue.extend({
-      //   template: strs
-      // });
-      // new MyComponent().$mount('#mount-point2');
-    });
-  }
   };
 </script>
 

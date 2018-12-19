@@ -195,21 +195,21 @@ $(document).ready(function () {
     opacity: .35,
     handle: ".drag"
   });
-  $(".sidebar-nav .lyrow").draggable({
-    connectToSortable: ".demo",
-    helper: "clone",
-    handle: ".drag",
-    drag: function (e, t) {
-      t.helper.width(400)
-    },
-    stop: function (e, t) {
-      $(".demo .column").sortable({
-        opacity: .35,
-        connectWith: ".column"
-      })
-      alert("lyrow");
-    }
-  });
+  // $(".sidebar-nav .lyrow").draggable({
+  //   connectToSortable: ".demo",
+  //   helper: "clone",
+  //   handle: ".drag",
+  //   drag: function (e, t) {
+  //     t.helper.width(400)
+  //   },
+  //   stop: function (e, t) {
+  //     $(".demo .column").sortable({
+  //       opacity: .35,
+  //       connectWith: ".column"
+  //     })
+  //     alert("lyrow");
+  //   }
+  // });
   $(".sidebar-nav .box").draggable({
     connectToSortable: ".column",
     helper: "clone",
