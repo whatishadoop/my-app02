@@ -210,17 +210,17 @@ $(document).ready(function () {
   //     alert("lyrow");
   //   }
   // });
-  $(".sidebar-nav .box").draggable({
-    connectToSortable: ".column",
-    helper: "clone",
-    handle: ".drag",
-    drag: function (e, t) {
-      t.helper.width(400)
-    },
-    stop: function () {
-      handleJsIds()
-    }
-  });
+  // $(".sidebar-nav .box").draggable({
+  //   connectToSortable: ".column",
+  //   helper: "clone",
+  //   handle: ".drag",
+  //   drag: function (e, t) {
+  //     t.helper.width(400)
+  //   },
+  //   stop: function () {
+  //     handleJsIds()
+  //   }
+  // });
   $("[data-target=#downloadModal]").click(function (e) {
     e.preventDefault();
     downloadLayoutSrc()

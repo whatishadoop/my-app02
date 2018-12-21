@@ -90,7 +90,7 @@
                   <div class="view">
                     <div class="row clearfix">
                       <div class="col-md-12 column">
-                        <div class="uid" name="xxx"></div>
+
                       </div>
                     </div>
                   </div>
@@ -100,12 +100,12 @@
           </div>
         </div>
         <!--/span-->
-        <div style="min-height: 754px;" class="demo ui-sortable">
+        <div style="min-height: 754px;" class="demo ui-sortable" id="droppable">
           <!--方式一 指令挂载-->
           <!--<div v-world:wbs17022.hehe.haha id="mount-point"></div>-->
           <!--方式二 手动挂载-->
-          <div id="mount-point2"></div>
-          内容区域
+          <!--<div id="mount-point2"></div>-->
+          <!--内容区域-->
         </div>
         <!--/span-->
         <div id="download-layout">
@@ -154,7 +154,8 @@
     data() {
       return {  // 普通属性国际化切换无效果
         chart: '<v-barchart></v-barchart>',
-        chart2: '<div v-world:wbs17022.hehe.haha></div>'
+        chart2: '<div v-world:wbs17022.hehe.haha></div>',
+        uid: ''
       };
     },
     methods: {
@@ -182,53 +183,62 @@
         return this.$t('brands.nike');
       }
     },
-    components: { barchart },
+    components: {barchart},
+    watch: {
+      uid(newVal, oldVal) {
+        // console.log('=============watch=============');
+        // console.log(newVal, oldVal);
+      }
+    },
     mounted: function () {
-      this.$nextTick(function () {
-        /* eslint-disable no-unused-vars */
-        // this.update();
-        // const strs = '<div v-world:wbs17022.hehe.haha id="mount-point">惺惺惜惺惺</div>';
-        // var MyComponent = Vue.extend({
-        //   template: strs
-        // });
-        // new MyComponent().$mount('#mount-point2');
-
-        $('.sidebar-nav .lyrow').draggable({
-          connectToSortable: '.demo',
-          helper: 'clone',
-          handle: '.drag',
-          start: function (e, t) {
-            var uuid = 'mount-' + UUID.create();
-            $(t.helper.context).find('div.uid').attr('id', uuid);
-          },
-          drag: function (e, t) {
-            t.helper.width(400);
-          },
-          stop: function (e, t) {
-            $('.demo .column').sortable({
-              opacity: 0.35,
-              connectWith: '.column'
-            });
-            let tmpuuid = $(t.helper.context).find('div.uid').attr('id');
-            console.log('============' + tmpuuid);
-            console.info(t.helper.context);
-            // if (tmpuuid) {
-              let timestamp = Date.parse(new Date());
-              let strs = `<div><div id="xxxx">{{msg}}</div></div>`;
-              // let MyComponent = Vue.extend({
-              //   data () {
-              //     return {
-              //       msg: timestamp
-              //     };
-              //   },
-              //   template: strs
-              // });
-              // new MyComponent().$mount('#' + tmpuuid);
-              // console.info('已经更新完毕');
-            }
-          // }
-        });
+      let self = this;
+      $('.sidebar-nav .lyrow').draggable({
+        connectToSortable: '.demo',
+        helper: 'clone',
+        handle: '.drag',
+        start: function (e, t) {
+          // var uuid = 'mount-' + UUID.create();
+          // $(t.helper.context).find('div.uid').attr('id', uuid);
+        },
+        drag: function (e, t) {
+          t.helper.width(400);
+        },
+        stop: function (e, t) {
+          $('.demo .column').sortable({
+            opacity: 0.35,
+            connectWith: '.column'
+          });
+        }
       });
+
+      $('#droppable').droppable({
+        drop: function(event, ui) {
+          var uuid = 'mount-' + UUID.create();
+          // self.$data.uid = uuid;
+          var dragobj = this;
+          self.$nextTick(function () {
+           $(dragobj).find('div.column').attr('id', uuid);
+            console.log('1111============' + uuid);
+            const strs = '<div><div>惺惺惜惺惺</div></div>';
+            var MyComponent = Vue.extend({
+              template: strs
+            });
+            new MyComponent().$mount('#' + uuid);
+          });
+        }
+      });
+      // this.$nextTick(function () {
+      //     console.log('next=============');
+      //     const strs = '<div><div>惺惺惜惺惺</div></div>';
+      //     var MyComponent = Vue.extend({
+      //       template: strs
+      //     });
+      //     console.log('start #' + self.$data.uid);
+      //     let newVal = this.$data.uid;
+      //     new MyComponent().$mount('#' + newVal);
+      //     console.log('end #' + newVal);
+      //     // console.info(t.helper.context);
+      // });
     }
   };
 </script>
