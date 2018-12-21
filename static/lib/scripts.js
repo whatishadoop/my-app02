@@ -190,11 +190,11 @@ $(window).resize(function () {
 $(document).ready(function () {
   $("body").css("min-height", $(window).height() - 90);
   $(".demo").css("min-height", $(window).height() - 160);
-  $(".demo, .demo .column").sortable({
-    connectWith: ".column",
-    opacity: .35,
-    handle: ".drag"
-  });
+  // $(".demo, .demo .column").sortable({
+  //   connectWith: ".column",
+  //   opacity: .35,
+  //   handle: ".drag"
+  // });
   // $(".sidebar-nav .lyrow").draggable({
   //   connectToSortable: ".demo",
   //   helper: "clone",

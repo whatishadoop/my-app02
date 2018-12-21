@@ -1,8 +1,6 @@
 <template>
     <div>
-      <h1>xxxxxxxxxxxxxxxxxxxxxxxxxx</h1>
-      <div id="myChart" :style="{width: '200px', height: '200px',border: '1px dashed #F00'}"></div>
-      xxxxxxxxxxxxx
+      <div :id="chartid" :style="{width: '200px', height: '200px',border: '1px dashed #F00'}"></div>
     </div>
 </template>
 
@@ -10,7 +8,8 @@
   export default {
     data () {
       return {
-        msg: 'Welcome to Your Vue.js App'
+        msg: 'Welcome to Your Vue.js App',
+        chartid: this.$uuid.create()
       };
     },
     mounted() {
@@ -19,7 +18,7 @@
     methods: {
       drawLine() {
         // 基于准备好的dom，初始化echarts实例
-        let myChart = this.$echarts.init(document.getElementById('myChart'));
+        let myChart = this.$echarts.init(document.getElementById('' + this.$data.chartid));
         // 绘制图表
         myChart.setOption({
           title: { text: '在Vue中使用echarts' },

@@ -4,11 +4,14 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 /* eslint-disable no-unused-vars */
+import uuid from 'uuid-js';
+/* eslint-disable no-unused-vars */
 import world from './directive/directive.js';
 
 // 引入echarts
 import echarts from 'echarts';
 Vue.prototype.$echarts = echarts;
+Vue.prototype.$uuid = uuid;
 
 Vue.config.productionTip = false;
 

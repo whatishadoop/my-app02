@@ -90,7 +90,7 @@
                   <div class="view">
                     <div class="row clearfix">
                       <div class="col-md-12 column">
-
+                          <div class="echart" id="default"></div>
                       </div>
                     </div>
                   </div>
@@ -101,15 +101,11 @@
         </div>
         <!--/span-->
         <div style="min-height: 754px;" class="demo ui-sortable" id="droppable">
-          <!--方式一 指令挂载-->
-          <!--<div v-world:wbs17022.hehe.haha id="mount-point"></div>-->
-          <!--方式二 手动挂载-->
-          <!--<div id="mount-point2"></div>-->
-          <!--内容区域-->
+            内容区域
         </div>
         <!--/span-->
         <div id="download-layout">
-          下载页面内容
+            下载页面内容
         </div>
       </div>
       <!--/row-->
@@ -147,15 +143,13 @@
 
 <script type="text/ecmascript-6">
   import Vue from 'vue';
-  import UUID from 'uuid-js';
   import barchart from 'components/chart/barchart';
 
   export default {
     data() {
       return {  // 普通属性国际化切换无效果
         chart: '<v-barchart></v-barchart>',
-        chart2: '<div v-world:wbs17022.hehe.haha></div>',
-        uid: ''
+        chart2: '<div v-world:wbs17022.hehe.haha></div>'
       };
     },
     methods: {
@@ -183,51 +177,43 @@
         return this.$t('brands.nike');
       }
     },
-    components: {barchart},
-    watch: {
-      uid(newVal, oldVal) {
-        // console.log('=============watch=============');
-        // console.log(newVal, oldVal);
-      }
-    },
     mounted: function () {
       let self = this;
-      $('.sidebar-nav .lyrow').draggable({
-        connectToSortable: '.demo',
-        helper: 'clone',
+      $('.demo, .demo .column').sortable({
+        connectWith: '.column',
+        opacity: 0.35,
         handle: '.drag',
-        start: function (e, t) {
-          // var uuid = 'mount-' + UUID.create();
-          // $(t.helper.context).find('div.uid').attr('id', uuid);
-        },
-        drag: function (e, t) {
-          t.helper.width(400);
-        },
-        stop: function (e, t) {
-          $('.demo .column').sortable({
-            opacity: 0.35,
-            connectWith: '.column'
-          });
-        }
-      });
-
-      $('#droppable').droppable({
-        drop: function(event, ui) {
-          var uuid = 'mount-' + UUID.create();
-          // self.$data.uid = uuid;
-          var dragobj = this;
+        stop: function (event, ui) {
+          var uuid = 'mount-' + self.$uuid.create();
+          $(this).find('.echart').attr('id', uuid);
           self.$nextTick(function () {
-           $(dragobj).find('div.column').attr('id', uuid);
             console.log('1111============' + uuid);
-            const strs = '<div><div>惺惺惜惺惺</div></div>';
+            const strs = '<div><barchart></barchart></div>';
             var MyComponent = Vue.extend({
-              template: strs
+              template: strs,
+              components: {barchart}
             });
             new MyComponent().$mount('#' + uuid);
           });
         }
       });
-      // this.$nextTick(function () {
+
+      $('.sidebar-nav .lyrow').draggable({
+        connectToSortable: '.demo',
+        helper: 'clone',
+        handle: '.drag',
+        drag: function (e, t) {
+          t.helper.width(400);
+        },
+        stop: function (e, t) {
+          // $('.demo .column').sortable({
+          //   opacity: 0.35,
+          //   connectWith: '.column'
+          // });
+        }
+      });
+
+           // this.$nextTick(function () {
       //     console.log('next=============');
       //     const strs = '<div><div>惺惺惜惺惺</div></div>';
       //     var MyComponent = Vue.extend({
