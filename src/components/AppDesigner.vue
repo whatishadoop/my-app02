@@ -92,12 +92,7 @@
                   <div class="view">
                     <div class="row clearfix">
                       <div class="col-md-12 column">
-                        <div cache="default">
-                          <div class="cus_component" type="barchart"></div>
-                        </div>
-                        <div cache="default">
-                          <div class="cus_directive"></div>
-                        </div>
+                        <div class="cus_component" type="barchart"></div>
                       </div>
                     </div>
                   </div>
@@ -118,12 +113,8 @@
                   <div class="view">
                     <div class="row clearfix">
                       <div class="col-md-12 column">
-                        <div cache="default">
-                          <div class="cus_component" type="barchart"></div>
-                        </div>
-                        <div cache="default">
-                          <div class="cus_directive"></div>
-                        </div>
+                        <div class="cus_component" type="barchart"></div>
+                        <div class="cus_directive"></div>
                       </div>
                     </div>
                   </div>
@@ -135,11 +126,38 @@
         <!--/span-->
         <div style="min-height: 754px;" class="demo ui-sortable" id="droppable">
           内容区域
-          <div id="mount-point"></div>
+            <div data-v-7269be4c="" renderstate="O" class="lyrow ui-draggable" style="display: block;"><a data-v-7269be4c=""
+                                                                                                          href="#close"
+                                                                                                          class="remove label label-danger"><i
+              data-v-7269be4c="" class="glyphicon-remove glyphicon"></i>
+              删除
+            </a> <span data-v-7269be4c="" class="drag label label-default"><i data-v-7269be4c=""
+                                                                              class="glyphicon glyphicon-move"></i>
+                拖动
+              </span>
+              <div data-v-7269be4c="" class="preview"><input data-v-7269be4c="" value="12" type="text" class="form-control">
+              </div>
+              <div data-v-7269be4c="" class="view">
+                <div data-v-7269be4c="" class="row clearfix">
+                  <div data-v-7269be4c="" class="col-md-12 column">
+                    <barchart></barchart>
+                  </div>
+                </div>
+              </div>
+            </div>
+
         </div>
         <!--/span-->
         <div id="download-layout">
-          下载页面内容
+          <div class="container">
+               下载区域
+          </div>
+        </div>
+        <!--/span-->
+        <div id="save-layout">
+          <div class="container">
+            保存区域
+          </div>
         </div>
       </div>
       <!--/row-->
@@ -206,6 +224,7 @@
         });
       }
     },
+    components: {barchart},
     computed: {
       nike() {  // js中引用国际化放在计算属性中
         return this.$t('brands.nike');
@@ -213,7 +232,7 @@
     },
     mounted: function () {
       let self = this;
-      $('.demo, .demo .column').sortable({
+      $('.demo').sortable({   //  设置$('.demo, .demo .column').sortable({ 则开启div内嵌模式
         connectWith: '.column',
         opacity: 0.35,
         handle: '.drag',
@@ -222,15 +241,10 @@
           let state = curModuleObj.attr('renderstate');
           // 只处理新未进行渲染的新组件
           if (state === 'C') {
-            let cusComponentId = 'module-' + self.$uuid.create();
-            console.info(cusComponentId);
-            let cusDirectiveId = 'module-' + self.$uuid.create();
+            let cusComponentId = 'component-' + self.$uuid.create();
             // 获取组件类型
             let moduleType = curModuleObj.find('.cus_component').attr('type');
             curModuleObj.find('.cus_component').attr('id', cusComponentId);
-            // 利用指令，设置组件影子
-            const cusDirectiveName = `v-world:${cusDirectiveId}`;
-            curModuleObj.find('.cus_directive').attr(cusDirectiveName, '');
             self.$nextTick(function () {
               const strs = `<${moduleType}></${moduleType}>`;
               let MyComponent = Vue.extend({
@@ -253,7 +267,7 @@
           t.helper.width(400);
         },
         stop: function (e, t) {
-          // $('.demo .column').sortable({
+          // $('.demo .column').sortable({  // 开启div内嵌模式
           //   opacity: 0.35,
           //   connectWith: '.column'
           // });

@@ -174,12 +174,28 @@ function downloadLayoutSrc() {
       ["aria-labelledby"],
       ["aria-hidden"],
       ["data-slide-to"],
-      ["data-slide"]
+      ["data-slide"],
+      ["cache"],
+      ["obj"],
+      ["ctype"]
     ]
   });
   $("#download-layout").html(formatSrc);
+  var componentObj = $("#download-layout").html(formatSrc).find('[obj=component]');
+  var cache = componentObj.attr('cache');
+  var ctype = componentObj.attr('ctype');
+  console.log("<" + ctype + " cache=" + cache + ">" + "</" + ctype + ">");
+  componentObj.replaceWith("<" + ctype + " cache=" + cache + ">" + "</" + ctype + ">");
   $("#downloadModal textarea").empty();
-  $("#downloadModal textarea").val(formatSrc)
+  $("#downloadModal textarea").val($("#download-layout").html());  // 设置apk显示内容，去除没用样式
+
+  // 处理保存内容到#save-layout 节点上，重新加载后能重新拖动
+  //  var componentObj2 = $("#save-layout").html($(".demo").html());
+  //  var componentObj3 =  componentObj2.find('[obj=component]');
+   // componentObj3.replaceWith("<" + ctype + " cache=" + cache + ">" + "</" + ctype + ">");
+   // var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
+  // var str = componentObj3.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
+  //
 }
 var currentDocument = null;
 var timerSave = 2e3;
@@ -266,6 +282,7 @@ $(document).ready(function () {
   removeElm();
   configurationElm();
   gridSystemGenerator();
+  //  定时保存布局
   setInterval(function () {
     handleSaveLayout()
   }, timerSave)
