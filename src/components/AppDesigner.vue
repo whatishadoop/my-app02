@@ -74,8 +74,10 @@
                 <i class="glyphicon-plus glyphicon"></i>
                 布局设置
               </li>
+              <!-- barchart -->
               <li class="rows" id="estRows">
-                <div class="lyrow ui-draggable">
+                <!--barchart组件-->
+                <div class="lyrow ui-draggable" renderstate="C">
                   <a href="#close" class="remove label label-danger">
                     <i class="glyphicon-remove glyphicon"></i>
                     删除
@@ -90,7 +92,38 @@
                   <div class="view">
                     <div class="row clearfix">
                       <div class="col-md-12 column">
-                          <div class="echart" id="default"></div>
+                        <div cache="default">
+                          <div class="cus_component" type="barchart"></div>
+                        </div>
+                        <div cache="default">
+                          <div class="cus_directive"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <!--tab组件-->
+                <div class="lyrow ui-draggable" renderstate="C">
+                  <a href="#close" class="remove label label-danger">
+                    <i class="glyphicon-remove glyphicon"></i>
+                    删除
+                  </a>
+                  <span class="drag label label-default">
+                  <i class="glyphicon glyphicon-move"></i>
+                  拖动
+                </span>
+
+                  <div class="preview">
+                    <input value="12" class="form-control" type="text"></div>
+                  <div class="view">
+                    <div class="row clearfix">
+                      <div class="col-md-12 column">
+                        <div cache="default">
+                          <div class="cus_component" type="barchart"></div>
+                        </div>
+                        <div cache="default">
+                          <div class="cus_directive"></div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -101,11 +134,12 @@
         </div>
         <!--/span-->
         <div style="min-height: 754px;" class="demo ui-sortable" id="droppable">
-            内容区域
+          内容区域
+          <div id="mount-point"></div>
         </div>
         <!--/span-->
         <div id="download-layout">
-            下载页面内容
+          下载页面内容
         </div>
       </div>
       <!--/row-->
@@ -184,17 +218,30 @@
         opacity: 0.35,
         handle: '.drag',
         stop: function (event, ui) {
-          var uuid = 'mount-' + self.$uuid.create();
-          $(this).find('.echart').attr('id', uuid);
-          self.$nextTick(function () {
-            console.log('1111============' + uuid);
-            const strs = '<div><barchart></barchart></div>';
-            var MyComponent = Vue.extend({
-              template: strs,
-              components: {barchart}
+          let curModuleObj = ui.item;
+          let state = curModuleObj.attr('renderstate');
+          // 只处理新未进行渲染的新组件
+          if (state === 'C') {
+            let cusComponentId = 'module-' + self.$uuid.create();
+            console.info(cusComponentId);
+            let cusDirectiveId = 'module-' + self.$uuid.create();
+            // 获取组件类型
+            let moduleType = curModuleObj.find('.cus_component').attr('type');
+            curModuleObj.find('.cus_component').attr('id', cusComponentId);
+            // 利用指令，设置组件影子
+            const cusDirectiveName = `v-world:${cusDirectiveId}`;
+            curModuleObj.find('.cus_directive').attr(cusDirectiveName, '');
+            self.$nextTick(function () {
+              const strs = `<${moduleType}></${moduleType}>`;
+              let MyComponent = Vue.extend({
+                template: strs,
+                components: {barchart}
+              });
+              new MyComponent().$mount('#' + cusComponentId);
+              // 挂载后渲染状态设置为O 旧组件状态
+              curModuleObj.attr('renderstate', 'O');
             });
-            new MyComponent().$mount('#' + uuid);
-          });
+          }
         }
       });
 
@@ -212,19 +259,6 @@
           // });
         }
       });
-
-           // this.$nextTick(function () {
-      //     console.log('next=============');
-      //     const strs = '<div><div>惺惺惜惺惺</div></div>';
-      //     var MyComponent = Vue.extend({
-      //       template: strs
-      //     });
-      //     console.log('start #' + self.$data.uid);
-      //     let newVal = this.$data.uid;
-      //     new MyComponent().$mount('#' + newVal);
-      //     console.log('end #' + newVal);
-      //     // console.info(t.helper.context);
-      // });
     }
   };
 </script>

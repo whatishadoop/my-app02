@@ -108,6 +108,7 @@ function configurationElm(e, t) {
     n.addClass($(this).attr("rel"))
   })
 }
+// 清除div
 function removeElm() {
   $(".demo").delegate(".remove", "click", function (e) {
     e.preventDefault();

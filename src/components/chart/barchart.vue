@@ -1,7 +1,5 @@
 <template>
-    <div>
       <div :id="chartid" :style="{width: '200px', height: '200px',border: '1px dashed #F00'}"></div>
-    </div>
 </template>
 
 <script>
