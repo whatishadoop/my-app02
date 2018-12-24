@@ -108,7 +108,7 @@ function configurationElm(e, t) {
     n.addClass($(this).attr("rel"))
   })
 }
-// 清除div
+// 删除div
 function removeElm() {
   $(".demo").delegate(".remove", "click", function (e) {
     e.preventDefault();
@@ -119,7 +119,7 @@ function removeElm() {
   })
 }
 function clearDemo() {
-  $(".demo").empty()
+  $(".demo .content").empty()
 }
 function removeMenuClasses() {
   $("#menu-layoutit li button").removeClass("active")
@@ -180,22 +180,23 @@ function downloadLayoutSrc() {
       ["ctype"]
     ]
   });
-  $("#download-layout").html(formatSrc);
+  // 保存download-layout上，给手机使用
   var componentObj = $("#download-layout").html(formatSrc).find('[obj=component]');
-  var cache = componentObj.attr('cache');
-  var ctype = componentObj.attr('ctype');
-  console.log("<" + ctype + " cache=" + cache + ">" + "</" + ctype + ">");
-  componentObj.replaceWith("<" + ctype + " cache=" + cache + ">" + "</" + ctype + ">");
+  console.log(componentObj.length);
+  $("#download-layout").html(formatSrc).find('[obj=component]').each(function(){
+    var cache = $(this).attr('cache');
+    var ctype = $(this).attr('ctype');
+    var tmp = $(this).replaceWith("<" + ctype + " cache=" + cache + ">" + "</" + ctype + ">");
+  });
   $("#downloadModal textarea").empty();
-  $("#downloadModal textarea").val($("#download-layout").html());  // 设置apk显示内容，去除没用样式
+  $("#downloadModal textarea").val($("#download-layout").html());
 
-  // 处理保存内容到#save-layout 节点上，重新加载后能重新拖动
+  // 保存到#save-layout 节点上，给pc使用
   //  var componentObj2 = $("#save-layout").html($(".demo").html());
   //  var componentObj3 =  componentObj2.find('[obj=component]');
-   // componentObj3.replaceWith("<" + ctype + " cache=" + cache + ">" + "</" + ctype + ">");
-   // var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
+  // componentObj3.replaceWith("<" + ctype + " cache=" + cache + ">" + "</" + ctype + ">");
+  // var arrEntities={'lt':'<','gt':'>','nbsp':' ','amp':'&','quot':'"'};
   // var str = componentObj3.replace(/&(lt|gt|nbsp|amp|quot);/ig,function(all,t){return arrEntities[t];});
-  //
 }
 var currentDocument = null;
 var timerSave = 2e3;

@@ -88,7 +88,8 @@
                 </span>
 
                   <div class="preview">
-                    <input value="12" class="form-control" type="text"></div>
+                    12
+                  </div>
                   <div class="view">
                     <div class="row clearfix">
                       <div class="col-md-12 column">
@@ -109,12 +110,12 @@
                 </span>
 
                   <div class="preview">
-                    <input value="12" class="form-control" type="text"></div>
+                    12
+                  </div>
                   <div class="view">
                     <div class="row clearfix">
                       <div class="col-md-12 column">
-                        <div class="cus_component" type="barchart"></div>
-                        <div class="cus_directive"></div>
+                        <div class="cus_component" type="tabbar"></div>
                       </div>
                     </div>
                   </div>
@@ -125,17 +126,20 @@
         </div>
         <!--/span-->
         <div style="min-height: 754px;" class="demo ui-sortable" id="droppable">
-          内容区域
-            <div data-v-7269be4c="" renderstate="O" class="lyrow ui-draggable" style="display: block;"><a data-v-7269be4c=""
-                                                                                                          href="#close"
-                                                                                                          class="remove label label-danger"><i
+          <div class="content">
+            内容区域
+            <div data-v-7269be4c="" renderstate="O" class="lyrow ui-draggable" style="display: block;"><a
+              data-v-7269be4c=""
+              href="#close"
+              class="remove label label-danger"><i
               data-v-7269be4c="" class="glyphicon-remove glyphicon"></i>
               删除
             </a> <span data-v-7269be4c="" class="drag label label-default"><i data-v-7269be4c=""
                                                                               class="glyphicon glyphicon-move"></i>
                 拖动
               </span>
-              <div data-v-7269be4c="" class="preview"><input data-v-7269be4c="" value="12" type="text" class="form-control">
+              <div data-v-7269be4c="" class="preview"><input data-v-7269be4c="" value="12" type="text"
+                                                             class="form-control">
               </div>
               <div data-v-7269be4c="" class="view">
                 <div data-v-7269be4c="" class="row clearfix">
@@ -145,18 +149,22 @@
                 </div>
               </div>
             </div>
-
+          </div>
+          <!--底部bar-->
+          <div class="tabbar-wrapper">
+            <tabbar class="tabbar"></tabbar>
+          </div>
         </div>
         <!--/span-->
         <div id="download-layout">
           <div class="container">
-               下载区域
+            下载区域
           </div>
         </div>
         <!--/span-->
         <div id="save-layout">
           <div class="container">
-            保存区域
+
           </div>
         </div>
       </div>
@@ -195,7 +203,7 @@
 
 <script type="text/ecmascript-6">
   import Vue from 'vue';
-  import barchart from 'components/chart/barchart';
+  // import barchart from 'components/chart/barchart';
 
   export default {
     data() {
@@ -224,7 +232,7 @@
         });
       }
     },
-    components: {barchart},
+    // components: {barchart},
     computed: {
       nike() {  // js中引用国际化放在计算属性中
         return this.$t('brands.nike');
@@ -232,7 +240,7 @@
     },
     mounted: function () {
       let self = this;
-      $('.demo').sortable({   //  设置$('.demo, .demo .column').sortable({ 则开启div内嵌模式
+      $('.content').sortable({   //  设置$('.demo, .demo .column').sortable({ 则开启div内嵌模式
         connectWith: '.column',
         opacity: 0.35,
         handle: '.drag',
@@ -248,8 +256,8 @@
             self.$nextTick(function () {
               const strs = `<${moduleType}></${moduleType}>`;
               let MyComponent = Vue.extend({
-                template: strs,
-                components: {barchart}
+                template: strs
+                // components: {barchart}
               });
               new MyComponent().$mount('#' + cusComponentId);
               // 挂载后渲染状态设置为O 旧组件状态
@@ -260,7 +268,7 @@
       });
 
       $('.sidebar-nav .lyrow').draggable({
-        connectToSortable: '.demo',
+        connectToSortable: '.content',
         helper: 'clone',
         handle: '.drag',
         drag: function (e, t) {
@@ -277,7 +285,22 @@
   };
 </script>
 
-<style lang="stylus" type="text/stylus" rel="stylesheet/stylus" scoped>
+<style lang="stylus" type="text/css" rel="stylesheet/css" scoped>
+  .tabbar-wrapper {
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    left: 0;
+  }
+
+  /*.tabbar-wrapper tabbar{*/
+  /*position: absolute;*/
+  /*bottom: 0;*/
+  /*left: 0;*/
+  /*width: 100%;*/
+  /*height: 100%;*/
+  /*}*/
+
 
 </style>
 

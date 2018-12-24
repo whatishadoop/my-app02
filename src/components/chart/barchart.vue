@@ -8,14 +8,19 @@
   export default {
     data() {
       return {
-        msg: 'Welcome to Your Vue.js App',
-        chartid: this.$uuid.create(),
+        msg: 'Welcome 222',
+        chartid: this.$uuid.create().hex,
         cache: ''
       };
     },
     mounted() {
       this.drawLine();
-      this.$data.cache = JSON.stringify(this.$data);
+      console.log(this.$data.chartid);
+      let newObj = {};
+      newObj.msg = this.$data.msg;
+      newObj.chartid = this.$data.chartid;
+      this.$data.cache = JSON.stringify(newObj);
+      // console.log(this.$data.cache);
     },
     methods: {
       drawLine() {
