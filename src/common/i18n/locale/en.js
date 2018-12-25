@@ -1,6 +1,6 @@
 export default {
   message: {
-    title: 'Sport Brands'
+    title: 'helper doc'
   },
   placeholder: {
     enter: 'Please type in your favorite brand'

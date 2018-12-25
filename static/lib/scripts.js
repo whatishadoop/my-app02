@@ -119,7 +119,7 @@ function removeElm() {
   })
 }
 function clearDemo() {
-  $(".demo .content").empty()
+  $(".content").children().remove();
 }
 function removeMenuClasses() {
   $("#menu-layoutit li button").removeClass("active")
@@ -185,7 +185,13 @@ function downloadLayoutSrc() {
   console.log(componentObj.length);
   $("#download-layout").html(formatSrc).find('[obj=component]').each(function(){
     var cache = $(this).attr('cache');
+    if(!cache){
+      cache = "";
+    }
     var ctype = $(this).attr('ctype');
+    if(!ctype){
+      ctype = "";
+    }
     var tmp = $(this).replaceWith("<" + ctype + " cache=" + cache + ">" + "</" + ctype + ">");
   });
   $("#downloadModal textarea").empty();
@@ -262,6 +268,11 @@ $(document).ready(function () {
     e.preventDefault();
     clearDemo()
   });
+  // 加载页面
+  // $("#add").click(function (e) {
+  //   e.preventDefault();
+  //   $(".content").html('<div renderstate="O" class="lyrow ui-draggable" style="display: block;"><a href="#close" class="remove label label-danger"><i class="glyphicon-remove glyphicon"></i>删除</a> <span class="drag label label-default"><i class="glyphicon glyphicon-move"></i>拖动</span><div class="preview"><input value="12" type="text" class="form-control"></div><div class="view"><div class="row clearfix"><div class="col-md-12 column"><barchart></barchart></div></div></div></div>');
+  // });
   $("#devpreview").click(function () {
     $("body").removeClass("edit sourcepreview");
     $("body").addClass("devpreview");

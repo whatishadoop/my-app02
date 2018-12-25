@@ -3,6 +3,7 @@
 import Vue from 'vue';
 import App from './App';
 import router from './router';
+import i18n from 'common/i18n/index.js';
 // 引入mintui
 import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css';
@@ -25,5 +26,6 @@ Vue.use(MyPlugin);
 new Vue({
   el: '#app',
   router,
+  i18n,
   render: h => h(App)
 });

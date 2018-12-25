@@ -20,12 +20,12 @@
             <div class="btn-group btn-donate pull-right"></div>
 
             <div class="btn-group">
-              <a class="btn btn-xs btn-primary active" href="./en"><i class="glyphicon-globe glyphicon"></i>
+              <a class="btn btn-xs btn-primary active" href="javascript:void(0)" @click="changeLocale"><i class="glyphicon-globe glyphicon"></i>
                 中文/英文
               </a>
               <button @click="changeLocale" role="button" data-toggle="modal" data-target="#feedbackModal" id="feedback"
                       class="btn btn-xs btn-primary active"><i class="glyphicon-comment glyphicon"></i>
-                帮助文档
+                {{$t("message.title")}}
               </button>
             </div>
           </li>
@@ -51,6 +51,10 @@
                       data-target="#downloadModal"
                       role="button" data-toggle="modal"><i class="glyphicon-chevron-down glyphicon"></i>
                 下载
+              </button>
+              <button class="btn btn-xs btn-primary" id="add" @click="addPage">
+                <i class="glyphicon-file glyphicon"></i>
+                加载
               </button>
               <button class="btn btn-xs btn-primary" href="#clear" id="clear">
                 <i class="glyphicon-trash glyphicon"></i>
@@ -78,7 +82,7 @@
               <li class="rows" id="estRows">
                 <!--barchart组件-->
                 <div class="lyrow ui-draggable" renderstate="C">
-                  <a href="#close" class="remove label label-danger">
+                  <a href="javascript:void(0)" class="remove label label-danger">
                     <i class="glyphicon-remove glyphicon"></i>
                     删除
                   </a>
@@ -100,7 +104,7 @@
                 </div>
                 <!--tab组件-->
                 <div class="lyrow ui-draggable" renderstate="C">
-                  <a href="#close" class="remove label label-danger">
+                  <a href="javascript:void(0)" class="remove label label-danger">
                     <i class="glyphicon-remove glyphicon"></i>
                     删除
                   </a>
@@ -128,27 +132,6 @@
         <div style="min-height: 754px;" class="demo ui-sortable" id="droppable">
           <div class="content">
             内容区域
-            <div data-v-7269be4c="" renderstate="O" class="lyrow ui-draggable" style="display: block;"><a
-              data-v-7269be4c=""
-              href="#close"
-              class="remove label label-danger"><i
-              data-v-7269be4c="" class="glyphicon-remove glyphicon"></i>
-              删除
-            </a> <span data-v-7269be4c="" class="drag label label-default"><i data-v-7269be4c=""
-                                                                              class="glyphicon glyphicon-move"></i>
-                拖动
-              </span>
-              <div data-v-7269be4c="" class="preview"><input data-v-7269be4c="" value="12" type="text"
-                                                             class="form-control">
-              </div>
-              <div data-v-7269be4c="" class="view">
-                <div data-v-7269be4c="" class="row clearfix">
-                  <div data-v-7269be4c="" class="col-md-12 column">
-                    <barchart></barchart>
-                  </div>
-                </div>
-              </div>
-            </div>
           </div>
           <!--底部bar-->
           <div class="tabbar-wrapper">
@@ -213,23 +196,22 @@
       };
     },
     methods: {
-      update() {
-        const strs = '<div><div v-world:wbs17022.hehe.haha id="mount-point"></div> 惺惺惜惺惺</div>';
+      addPage() {
+        // 先清空再加载
+        $('.content').children().remove();
+        $('.content').html('<div id="mount-point"></div>');
+        // 模拟从后台读取页面
+        const strs = '<div renderstate="O" class="lyrow ui-draggable" style="display: block;"><a href="javascript:void(0)" class="remove label label-danger"><i class="glyphicon-remove glyphicon"></i>删除</a> <span class="drag label label-default"><i class="glyphicon glyphicon-move"></i>拖动</span><div class="preview"><input value="12" type="text" class="form-control"></div><div class="view"><div class="row clearfix"><div class="col-md-12 column"><barchart></barchart></div></div></div></div>';
+
+        // 动态挂载页面
         var MyComponent = Vue.extend({
           template: strs
         });
-        new MyComponent().$mount('#mount-point2');
-        console.info('已经更新完毕');
+        new MyComponent().$mount('#mount-point');
       },
       changeLocale() {
-        this.$nextTick(function () {
-          const strs = `<div><div id="xxxx">惺惺惜惺惺</div></div>`;
-          let MyComponent = Vue.extend({
-            template: strs
-          });
-          new MyComponent().$mount('#mount-point3');
-          console.info('已经更新完毕');
-        });
+        let locale = this.$i18n.locale;
+        locale === 'zh' ? this.$i18n.locale = 'en' : this.$i18n.locale = 'zh';
       }
     },
     // components: {barchart},
@@ -292,15 +274,5 @@
     bottom: 0;
     left: 0;
   }
-
-  /*.tabbar-wrapper tabbar{*/
-  /*position: absolute;*/
-  /*bottom: 0;*/
-  /*left: 0;*/
-  /*width: 100%;*/
-  /*height: 100%;*/
-  /*}*/
-
-
 </style>
 
