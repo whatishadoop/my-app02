@@ -1,10 +1,10 @@
-import barchart from 'components/chart/barchart';
-import tabbar from 'components/tabbar/tabbar';
+// import barchart from 'components/chart/barchart';
+// import tabbar from 'components/tabbar/tabbar';
 
 export default {
   install: function (Vue) {
-    // 插件注册
-    Vue.component('barchart', barchart);
-    Vue.component('tabbar', tabbar);
+    // 全局注册异步组件
+    Vue.component('barchart', resolve => require(['components/chart/barchart'], resolve));
+    Vue.component('tabbar', resolve => require(['components/tabbar/tabbar'], resolve));
   }
 };
