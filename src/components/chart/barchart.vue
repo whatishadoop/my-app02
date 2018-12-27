@@ -1,6 +1,10 @@
 <template>
   <div :cache="cache" ctype="barchart" obj="component">
     <div :id="chartid" :style="{width: '200px', height: '200px',border: '1px dashed #F00'}"></div>
+    <div>组件ID: {{id}}</div>
+    <button @click="test(id)">交互测试</button>
+    <div>交互数据: {{data}}</div>
+    对象ID: <input v-model="iddata"/>
   </div>
 </template>
 
@@ -10,12 +14,16 @@
       return {
         msg: 'Welcome 222',
         chartid: this.$uuid.create().hex,
-        cache: ''
+        cache: '',
+        data: '000',
+        iddata: '',
+        executejs: ''
       };
     },
+    props: ['id'],  // 框架传入
     mounted() {
       this.drawLine();
-      console.log(this.$data.chartid);
+      // console.log(this.$data.chartid);
       let newObj = {};
       newObj.msg = this.$data.msg;
       newObj.chartid = this.$data.chartid;
@@ -23,6 +31,16 @@
       // console.log(this.$data.cache);
     },
     methods: {
+      test(aaa) {
+        this.executejs = 'var obj = window.' + 'C3f1b59d18bd443588683381862cdb488' + ';obj.test2("' + this.id + '")';
+        var foo = window;
+        console.log(foo.eval(this.executejs));
+         // window.C4375ce51a16242cf88dbfee89dfcd347.test2('aaaaa');
+      },
+      test2(aaa) {
+        // alert(this.id);
+        this.data = aaa;
+      },
       drawLine() {
         // 基于准备好的dom，初始化echarts实例
         let myChart = this.$echarts.init(document.getElementById('' + this.$data.chartid));

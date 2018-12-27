@@ -111,6 +111,7 @@ function configurationElm(e, t) {
 // 删除div
 function removeElm() {
   $(".demo").delegate(".remove", "click", function (e) {
+    console.log("removeElm");
     e.preventDefault();
     $(this).parent().remove();
     if (!$(".demo .lyrow").length > 0) {
@@ -119,6 +120,7 @@ function removeElm() {
   })
 }
 function clearDemo() {
+  console.log("clearDemo");
   $(".content").children().remove();
 }
 function removeMenuClasses() {
@@ -266,7 +268,7 @@ $(document).ready(function () {
   });
   $("#clear").click(function (e) {
     e.preventDefault();
-    clearDemo()
+    clearDemo();
   });
   // 加载页面
   // $("#add").click(function (e) {

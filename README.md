@@ -10,10 +10,3 @@ https://www.cnblogs.com/Smiled/p/7686316.html
 5.设置手机显示区域，支持rem响应方式
 6.apk打包显示
 7.单个控件渲染方式抽象，基于模板设计模式开发
-8.插件开发
-
-
-fix:
-1.scripts.js downloadLayoutSrc保存页面cache乱码
-
-

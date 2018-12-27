@@ -1,25 +1,26 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import homerouter from './modules/homerouter.js';
-import store1 from 'src/views/store';
+import AppDesigner from 'views/AppDesigner';
+import HomeRouter from './modules/homerouter.js';
+import StoreTest from 'src/views/store';
+
 Vue.use(Router);
 
 export default new Router({
   routes: [
-    // {
-    //   path: '/',
-    //   redirect: '/AppDesigner'
-    // },
     {
       path: '/',
-      component: store1
+      redirect: '/AppDesigner'
+    },
+    {
+      path: '/AppDesigner/StoreTest',
+      component: StoreTest
     },
     {
       path: '/AppDesigner',
-      component: resolve => require(['components/AppDesigner'], resolve),
-      redirect: '/AppDesigner/content',
+      component: AppDesigner,
       children: [
-        ...homerouter
+        ...HomeRouter
       ]
     }
   ]

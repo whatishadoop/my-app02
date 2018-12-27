@@ -20,7 +20,8 @@
             <div class="btn-group btn-donate pull-right"></div>
 
             <div class="btn-group">
-              <a class="btn btn-xs btn-primary active" href="javascript:void(0)" @click="changeLocale"><i class="glyphicon-globe glyphicon"></i>
+              <a class="btn btn-xs btn-primary active" href="javascript:void(0)" @click="changeLocale"><i
+                class="glyphicon-globe glyphicon"></i>
                 中文/英文
               </a>
               <button @click="changeLocale" role="button" data-toggle="modal" data-target="#feedbackModal" id="feedback"
@@ -231,19 +232,42 @@
           let state = curModuleObj.attr('renderstate');
           // 只处理新未进行渲染的新组件
           if (state === 'C') {
-            let cusComponentId = 'component-' + self.$uuid.create();
+            let str = '' + self.$uuid.create();
+            let reg = new RegExp('-', 'g');
+            let newstr = str.replace(reg, '');
+            let cusComponentId = 'C' + newstr;
+            console.log(cusComponentId);
             // 获取组件类型
             let moduleType = curModuleObj.find('.cus_component').attr('type');
             curModuleObj.find('.cus_component').attr('id', cusComponentId);
             self.$nextTick(function () {
-              const strs = `<${moduleType}></${moduleType}>`;
+              const strs = `<${moduleType} ref="${cusComponentId}" id="${cusComponentId}"></${moduleType}>`;
               let MyComponent = Vue.extend({
-                template: strs
-                // components: {barchart}
+                template: strs,
+                mounted: function () {
+                  if (this.$refs[cusComponentId]) {
+                    console.log('mounted 存储');
+                    window[cusComponentId] = this.$refs[cusComponentId];
+                    window[cusComponentId].test2(cusComponentId);
+                  }
+                },
+                updated: function () {
+                  if (this.$refs[cusComponentId]) {
+                    console.log('updated 存储');
+                    window[cusComponentId] = this.$refs[cusComponentId];
+                    window[cusComponentId].test2(cusComponentId);
+                  }
+                }
               });
               new MyComponent().$mount('#' + cusComponentId);
+              // tmpObj.test(111);
               // 挂载后渲染状态设置为O 旧组件状态
               curModuleObj.attr('renderstate', 'O');
+              // tmpObj.$nextTick(function () {
+              //   console.log(cusComponentId);
+              //   console.log(tmpObj.$refs[cusComponentId]);
+              //   // window[cusComponentId] = tmpObj.$refs[cusComponentId];
+              // });
             });
           }
         }

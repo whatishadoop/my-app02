@@ -1,11 +1,12 @@
 <template>
   <div>
-
-    <button @click="handleSubmit">点我</button>
-    <p>userName : {{ userName }}</p>
-    <p>appNameWithVersion: {{ appNameWithVersion }}</p>
-    <p>firstLetter: {{ firstLetter }}</p>
-    <p>appName: {{ appName }}</p>
+    <barchart ref="chart1"></barchart>
+    <p>userName (mapState) : {{ userName }}</p>
+    <p>appNameWithVersion (mapGetters): {{ appNameWithVersion }}</p>
+    <p>firstLetter (mapGetters): {{ firstLetter }}</p>
+    <p>appName (this.$store.state.xxxx): {{ appName }}</p>
+    <button @click="handleSubmit">向后台提交数据</button>
+    <button @click="clickEvalFn">测试clickEvalFn</button>
   </div>
 </template>
 
@@ -15,7 +16,8 @@
     name: 'store',
     data() {
       return {
-        inputValue: ''
+        inputValue: '',
+        clickEvalData: 'var aa = "a" + 2;if(aa == "a2"){ 4444};window.chart.test("jjjjjjjj");'
       };
     },
     computed: {
@@ -46,7 +48,19 @@
         }).catch(error => {
           console.log(error);
         });
+      },
+      clickEvalFn() {
+        // let jsonStr = this.clickEvalData;
+       // let obj = this.$refs.chart1;
+        // 方式一
+        window.chart = this.$refs['chart1'];
+        var foo = window;
+        console.log(foo.eval(this.clickEvalData));
+       // console.log(this.$refs.chart1);
       }
+    },
+    mounted: {
+
     }
   };
 </script>
