@@ -246,28 +246,19 @@
                 template: strs,
                 mounted: function () {
                   if (this.$refs[cusComponentId]) {
-                    console.log('mounted 存储');
                     window[cusComponentId] = this.$refs[cusComponentId];
-                    window[cusComponentId].test2(cusComponentId);
                   }
                 },
                 updated: function () {
+                  // 异步加载组件，初次触发updated事件
                   if (this.$refs[cusComponentId]) {
-                    console.log('updated 存储');
                     window[cusComponentId] = this.$refs[cusComponentId];
-                    window[cusComponentId].test2(cusComponentId);
                   }
                 }
               });
               new MyComponent().$mount('#' + cusComponentId);
-              // tmpObj.test(111);
               // 挂载后渲染状态设置为O 旧组件状态
               curModuleObj.attr('renderstate', 'O');
-              // tmpObj.$nextTick(function () {
-              //   console.log(cusComponentId);
-              //   console.log(tmpObj.$refs[cusComponentId]);
-              //   // window[cusComponentId] = tmpObj.$refs[cusComponentId];
-              // });
             });
           }
         }
