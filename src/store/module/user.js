@@ -1,8 +1,7 @@
-import { login, authorization } from 'src/api/user';
-import { setToken } from 'src/lib/util';
+import { getData } from 'src/api/user';
 
 const state = {
-  userName: 'Lison'
+  userName: 'Nathon'
 };
 const getters = {
   firstLetter: (state) => {
@@ -15,14 +14,14 @@ const mutations = {
   }
 };
 const actions = {
-  updateUserName ({ commit, state, rootState, dispatch }) {
-    // rootState.appName
-  },
-  login ({ commit }, { userName, password }) {
+  login ({ commit }) {
     return new Promise((resolve, reject) => {
-      login({ userName, password }).then(res => {
-        if (res.code === 200 && res.data.token) {
-          setToken(res.data.token);
+      getData().then(res => {
+        if (res.code === 200) {
+          // 打印接收数据
+          console.log(res.data);
+          // 触发mutaion操作
+          commit('SET_USER_NAME', 'success');
           resolve();
         } else {
           reject(new Error('错误'));
@@ -31,23 +30,6 @@ const actions = {
         reject(error);
       });
     });
-  },
-  authorization ({ commit }, token) {
-    return new Promise((resolve, reject) => {
-      authorization().then(res => {
-        if (parseInt(res.code) === 401) {
-          reject(new Error('token error'));
-        } else {
-          setToken(res.data.token);
-          resolve();
-        }
-      }).catch(error => {
-        reject(error);
-      });
-    });
-  },
-  logout () {
-    setToken('');
   }
 };
 

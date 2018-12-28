@@ -1,29 +1,21 @@
 import axios from './index';
 
-export const getUserInfo = ({ userId }) => {
+// get请求方式
+export const getData = () => {
   return axios.request({
-    url: '/getUserInfo',
-    method: 'post',
-    data: {
-      userId
-    }
-  });
-};
-
-export const login = ({ userName, password }) => {
-  return axios.request({
-    url: '/index/login',
-    method: 'post',
-    data: {
-      userName,
-      password
-    }
-  });
-};
-
-export const authorization = () => {
-  return axios.request({
-    url: '/users/authorization',
+    url: '/api/seller',
     method: 'get'
+  });
+};
+
+// post请求
+export const postData = ({param1, param2}) => {
+  return axios.request({
+    url: '/api/goods',
+    method: 'post',
+    data: {
+      param1,
+      param2
+    }
   });
 };

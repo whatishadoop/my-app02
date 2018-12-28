@@ -35,7 +35,7 @@
         // this.executejs = 'var obj = window.' + 'C3f1b59d18bd443588683381862cdb488' + ';obj.test2("' + this.id + '")';
         // var obj = window.C7dc894fc51b846e59015c38cb66688c6;obj.test2("aaa");
         var foo = window;
-        console.log(foo.eval(this.executejs));
+        foo.eval(this.executejs);
          // window.C4375ce51a16242cf88dbfee89dfcd347.test2('aaaaa');
       },
       test2(aaa) {

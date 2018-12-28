@@ -1,21 +1,14 @@
-import { getAppName } from 'src/api/app';
+import {getData} from 'src/api/user';
 
 const actions = {
-  // updateAppName ({ commit }) {
-  //   getAppName().then(res => {
-  //     const { info: { appName } } = res
-  //     commit('SET_APP_NAME', appName)
-  //   }).catch(err => {
-  //     console.log(err)
-  //   })
-  // }
-  async updateAppName ({ commit }) {
-    try {
-      const { info: { appName } } = await getAppName();
+  updateAppName({commit}) {
+    getData().then(res => {
+      console.log(res);
+      const appName = res.data.name;
       commit('SET_APP_NAME', appName);
-    } catch (err) {
+    }).catch(err => {
       console.log(err);
-    }
+    });
   }
 };
 export default actions;

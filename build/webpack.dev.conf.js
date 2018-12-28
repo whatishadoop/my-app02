@@ -8,6 +8,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin')
 const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
 const portfinder = require('portfinder')
 
+// 模拟后台数据
 const appData = require('../data.json')
 const seller = appData.seller
 const goods = appData.goods
@@ -29,7 +30,7 @@ const devWebpackConfig = merge(baseWebpackConfig, {
           data: seller
         })
       });
-      app.get('/api/goods', function(req, res) {
+      app.post('/api/goods', function(req, res) {
         res.json({
           errno: 0,
           data: goods
