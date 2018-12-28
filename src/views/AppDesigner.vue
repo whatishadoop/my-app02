@@ -187,7 +187,6 @@
 
 <script type="text/ecmascript-6">
   import Vue from 'vue';
-  // import barchart from 'components/chart/barchart';
 
   export default {
     data() {
@@ -246,6 +245,7 @@
                 template: strs,
                 mounted: function () {
                   if (this.$refs[cusComponentId]) {
+                    // 向windows注册组件对象
                     window[cusComponentId] = this.$refs[cusComponentId];
                   }
                 },
@@ -282,12 +282,11 @@
   };
 </script>
 
-<style lang="stylus" type="text/css" rel="stylesheet/css" scoped>
-  .tabbar-wrapper {
-    position: absolute;
-    width: 100%;
-    bottom: 0;
-    left: 0;
-  }
+<style lang="stylus" type="text/stylus" rel="stylesheet/stylus" scoped>
+  .tabbar-wrapper
+    position: absolute
+    width: 100%
+    bottom: 0
+    left: 0
 </style>
 
