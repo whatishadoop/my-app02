@@ -108,10 +108,8 @@ function configurationElm(e, t) {
     n.addClass($(this).attr("rel"))
   })
 }
-// 删除div
 function removeElm() {
   $(".demo").delegate(".remove", "click", function (e) {
-    console.log("removeElm");
     e.preventDefault();
     $(this).parent().remove();
     if (!$(".demo .lyrow").length > 0) {
@@ -120,8 +118,7 @@ function removeElm() {
   })
 }
 function clearDemo() {
-  console.log("clearDemo");
-  $(".content").children().remove();
+  $(".demo").empty()
 }
 function removeMenuClasses() {
   $("#menu-layoutit li button").removeClass("active")
@@ -216,37 +213,6 @@ $(window).resize(function () {
 $(document).ready(function () {
   $("body").css("min-height", $(window).height() - 90);
   $(".demo").css("min-height", $(window).height() - 160);
-  // $(".demo, .demo .column").sortable({
-  //   connectWith: ".column",
-  //   opacity: .35,
-  //   handle: ".drag"
-  // });
-  // $(".sidebar-nav .lyrow").draggable({
-  //   connectToSortable: ".demo",
-  //   helper: "clone",
-  //   handle: ".drag",
-  //   drag: function (e, t) {
-  //     t.helper.width(400)
-  //   },
-  //   stop: function (e, t) {
-  //     $(".demo .column").sortable({
-  //       opacity: .35,
-  //       connectWith: ".column"
-  //     })
-  //     alert("lyrow");
-  //   }
-  // });
-  // $(".sidebar-nav .box").draggable({
-  //   connectToSortable: ".column",
-  //   helper: "clone",
-  //   handle: ".drag",
-  //   drag: function (e, t) {
-  //     t.helper.width(400)
-  //   },
-  //   stop: function () {
-  //     handleJsIds()
-  //   }
-  // });
   $("[data-target=#downloadModal]").click(function (e) {
     e.preventDefault();
     downloadLayoutSrc()
@@ -268,13 +234,8 @@ $(document).ready(function () {
   });
   $("#clear").click(function (e) {
     e.preventDefault();
-    clearDemo();
+    clearDemo()
   });
-  // 加载页面
-  // $("#add").click(function (e) {
-  //   e.preventDefault();
-  //   $(".content").html('<div renderstate="O" class="lyrow ui-draggable" style="display: block;"><a href="#close" class="remove label label-danger"><i class="glyphicon-remove glyphicon"></i>删除</a> <span class="drag label label-default"><i class="glyphicon glyphicon-move"></i>拖动</span><div class="preview"><input value="12" type="text" class="form-control"></div><div class="view"><div class="row clearfix"><div class="col-md-12 column"><barchart></barchart></div></div></div></div>');
-  // });
   $("#devpreview").click(function () {
     $("body").removeClass("edit sourcepreview");
     $("body").addClass("devpreview");
@@ -296,7 +257,6 @@ $(document).ready(function () {
   removeElm();
   configurationElm();
   gridSystemGenerator();
-  //  定时保存布局
   setInterval(function () {
     handleSaveLayout()
   }, timerSave)
