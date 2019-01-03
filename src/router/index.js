@@ -1,27 +1,28 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import AppDesigner from 'views/AppDesigner';
-import HomeRouter from './module/homerouter.js';
-import StoreTest from 'src/views/store';
+import routes from './router';
+import store from 'src/store';
+import { setToken, getToken } from 'src/lib/util';
 
 Vue.use(Router);
-
-export default new Router({
-  routes: [
-    {
-      path: '/',
-      redirect: '/AppDesigner'
-    },
-    {
-      path: '/AppDesigner/StoreTest',
-      component: StoreTest
-    },
-    {
-      path: '/AppDesigner',
-      component: AppDesigner,
-      children: [
-        ...HomeRouter
-      ]
-    }
-  ]
+const router = new Router({
+  routes
 });
+
+// 路由守卫
+router.beforeEach((to, from, next) => {
+  const token = getToken();  // 获取token值
+  if (token) {
+      store.dispatch('authorization', token).then(() => {
+      if (to.name === 'login') next({ name: 'AppDesigner' });
+      else next();
+    }).catch(() => {
+      setToken('');
+      next({ name: 'login' });
+    });
+  } else {
+    if (to.name === 'login') next();
+    else next({ name: 'login' });
+  }
+});
+export default router;

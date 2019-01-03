@@ -1,21 +1,34 @@
+/**
+ * 用户接口
+ */
 import axios from './index';
 
-// get请求方式
-export const getData = () => {
+// 根据用户id获取用户信息
+export const getUserInfo = ({ userId }) => {
   return axios.request({
-    url: '/api/seller',
-    method: 'get'
+    url: '/getUserInfo',
+    method: 'post',
+    data: {
+      userId
+    }
   });
 };
 
-// post请求
-export const postData = ({param1, param2}) => {
+// 登录认证
+export const login = ({ userName, password }) => {
   return axios.request({
-    url: '/api/goods',
+    url: '/index/login',
     method: 'post',
     data: {
-      param1,
-      param2
+      userName,
+      password
     }
+  });
+};
+
+export const authorization = () => {
+  return axios.request({
+    url: '/users/authorization',
+    method: 'get'
   });
 };

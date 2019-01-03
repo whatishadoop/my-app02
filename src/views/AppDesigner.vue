@@ -8,7 +8,7 @@
           <span class="glyphicon-bar"></span>
         </button>
         <a class="navbar-brand" href="#">
-          Dwepapp
+          Dwebapp
         </a>
       </div>
       <div class="collapse navbar-collapse">
@@ -436,7 +436,7 @@
 
 <script type="text/ecmascript-6">
   import Vue from 'vue';
-
+  import {init} from '../lib/scripts';
   export default {
     data() {
       return {  // 普通属性国际化切换无效果
@@ -469,6 +469,7 @@
       }
     },
     mounted: function () {
+      init();
       let self = this;
       $('.demo, .demo .column').sortable({
         connectWith: '.demo', // 只能放在.demo区域内，若布局嵌套设置为.column
