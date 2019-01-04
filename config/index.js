@@ -9,15 +9,15 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {  // 设置代理,解决本地跨域
-      '/index': {
-        target: 'http://localhost:3000',
-        changeOrigin: true
-      },
-      '/users': {
-        target: 'http://localhost:3000',
-        changeOrigin: true
-      }
+    proxyTable: {  // 设置代理,解决本地跨域访问后台服务
+      // '/index': {
+      //   target: 'http://localhost:3000',
+      //   changeOrigin: true
+      // },
+      // '/users': {
+      //   target: 'http://localhost:3000',
+      //   changeOrigin: true
+      // }
     },
     // Various Dev Server settings
     host: '0.0.0.0', // can be overwritten by process.env.HOST

@@ -17,9 +17,8 @@ import uuid from 'uuid-js';
 import echarts from 'echarts';
 // 引入自定义组件(插件)
 import webAppPlugin from 'components';
-
-/* eslint-disable no-unused-vars */
-import world from './directive/directive.js';
+// 开发环境使用mock
+if (process.env.NODE_ENV !== 'production') require('./mock');
 
 Vue.config.productionTip = false;
 Vue.prototype.$echarts = echarts;

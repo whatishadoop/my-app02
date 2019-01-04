@@ -1,18 +1,11 @@
-import Mock from 'mockjs'
-import { getUserInfo } from './response/user'
-const Random = Mock.Random
+import Mock from 'mockjs';
+import { getAuthorization, login } from './response/user';
 
-Mock.mock(/\/getUserInfo/, 'post', getUserInfo)
+Mock.mock('/index/login', 'post', login);
+Mock.mock('/users/authorization', 'get', getAuthorization);
 
+// 设置超时时间
 Mock.setup({
   timeout: 0
-})
-
-Random.extend({
-  fruit () {
-    const fruit = ['apple', 'peach', 'lemon']
-    return this.pick(fruit)
-  }
-})
-
-export default Mock
+});
+export default Mock;

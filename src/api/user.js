@@ -17,7 +17,7 @@ export const getUserInfo = ({ userId }) => {
 // 登录认证
 export const login = ({ userName, password }) => {
   return axios.request({
-    url: '/index/login',
+    url: '/api/login',
     method: 'post',
     data: {
       userName,
@@ -28,7 +28,7 @@ export const login = ({ userName, password }) => {
 
 export const authorization = () => {
   return axios.request({
-    url: '/users/authorization',
+    url: '/api/authorization',
     method: 'get'
   });
 };
