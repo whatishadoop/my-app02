@@ -367,7 +367,7 @@
                     <h3 class="popover-title">帮助</h3>
 
                     <div class="popover-content">
-                     xxxxx
+                      xxxxx
                     </div>
                   </div>
                 </div>
@@ -538,7 +538,6 @@
     }
   };
 </script>
-
 <style lang="stylus" type="text/stylus" rel="stylesheet/stylus" scoped>
   .tabbar-wrapper
     position: absolute

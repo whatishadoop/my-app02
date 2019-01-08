@@ -11,6 +11,9 @@ import i18n from './i18n';
 // 引入mintui
 import Mint from 'mint-ui';
 import 'mint-ui/lib/style.css';
+// 引入iview
+import iview from 'iview';
+import 'iview/dist/styles/iview.css';
 // 引入uuid生成器
 import uuid from 'uuid-js';
 // 引入echarts
@@ -25,6 +28,7 @@ Vue.prototype.$echarts = echarts;
 Vue.prototype.$uuid = uuid;
 
 Vue.use(Mint);
+Vue.use(iview);
 Vue.use(webAppPlugin);
 
 /* eslint-disable no-new */
