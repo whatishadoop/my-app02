@@ -5,7 +5,7 @@
     <button @click="test(id)">交互测试</button><br/>
     执行js: <textarea v-model="executejs"></textarea>
     <div>交互数据: {{data}}</div>
-
+    <Button @click="attraConfigClick">编辑</Button>
   </div>
 </template>
 
@@ -31,6 +31,10 @@
       // console.log(this.$data.cache);
     },
     methods: {
+      attraConfigClick () {
+        this.$bus.$emit('on-attraConfig', true);
+        console.log('attraConfigClick');
+      },
       test(aaa) {
         // 测试用: window.C4375ce51a16242cf88dbfee89dfcd347.test2('aaaaa');
         var foo = window;
@@ -61,7 +65,6 @@
     }
   };
 </script>
-
 <style scoped>
 
 </style>

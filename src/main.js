@@ -4,6 +4,8 @@ import App from './App';
 import router from './router';
 // 引入vuex
 import store from './store';
+//  引入总线
+import Bus from './lib/bus';
 // 引入国际化
 import i18n from './i18n';
 // 引入mintui
@@ -22,6 +24,7 @@ if (process.env.NODE_ENV !== 'production') require('./mock');
 Vue.config.productionTip = false;
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$uuid = uuid;
+Vue.prototype.$bus = Bus;
 
 Vue.use(webAppPlugin);
 

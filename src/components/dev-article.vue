@@ -4,7 +4,7 @@
             <!--layout + grid布局组合使用-->
             <Row>
                 <Col span="4" offset="1">
-                    <img src="../assets/logo.png" alt="logo" class="logo">
+                  <Icon @click.native="collapsedSider" :class="rotateIcon" type="md-menu" size="24"></Icon>
                 </Col>
                 <Col span="13">
                     <!--mode="horizontal"设置菜单水平排列，菜单高亮显示:active-name-->
@@ -21,8 +21,8 @@
                         <Col span="4" offset="2">
                             <!--带头像的下拉菜单-->
                             <Dropdown>
-                                <Avatar src="https://avatars1.githubusercontent.com/u/13377475?s=460&v=4"></Avatar>
-                                <DropdownMenu slot="list">
+                              <Avatar style="background-color: #2d8cf0" icon="ios-person"/>
+                              <DropdownMenu slot="list">
                                     <DropdownItem>我的主页</DropdownItem>
                                     <DropdownItem>我的收藏</DropdownItem>
                                     <DropdownItem>
@@ -36,16 +36,12 @@
                             </Dropdown>
                         </Col>
                         <Col span="6">
-                            <Button @click="changeLocale">语言选择</Button>
+                            <Icon type="ios-chatboxes" size="24" @click="changeLocale"/>
                         </Col>
                         <Col span="6">
                             <Button>{{$t("message.title")}}</Button>
                         </Col>
-                      <Col span="6">
-                          <!--设置图标，点击后右侧弹出下面定义的Drawer配色抽屉组件,点击时设置openTheme=true表示显示该组件，此时点击灰色区域或差按钮都会收回抽屉-->
-                          <Icon type="md-color-palette" size="24" @click="openTheme=true"/>
-                      </Col>
-                    </Row>
+                     </Row>
                 </Col>
             </Row>
         </Header>
@@ -53,9 +49,9 @@
         <Layout>
             <!--设置左边Sider 传入属性，v-model="isCollapsed"设置菜单缩放与collapsible配合使用-->
             <!--:class="{ 'sider-hide':isCollapsed } 根据变量属性值设置对应的样式-->
-            <Sider class="sider" width="240" collapsible :collapsed-width="64" v-model="isCollapsed" :class="{ 'sider-hide':isCollapsed }" v-if="showmenu">
+            <Sider ref="side1" hide-trigger class="sider" width="240" collapsible :collapsed-width="64" v-model="isCollapsed" :class="{ 'sider-hide':isCollapsed }" v-if="showmenu">
                 <!--修改菜单主题色为dark，active-name="option2" 第二项设置为高亮显示-->
-                <Menu class="sider-menu" theme="dark" active-name="option2" width="auto">
+                <Menu class="sider-menu" theme="dark" active-name="option2" width="auto" :class="menuitemClasses">
                     <MenuItem name="option1">
                         <!--设置菜单项显示内容-->
                         <Icon type="ios-search"></Icon>
@@ -77,8 +73,6 @@
                 <slot></slot>
             </Content>
         </Layout>
-        <!--设置:closable="false" 取消差按钮-->
-        <Drawer title="选择配色" v-model="openTheme" :closable="false"></Drawer>
     </Layout>
 </template>
 
@@ -96,11 +90,27 @@
                 // 菜单路由赋值
                 activeName: this.$route.path,
                 count: 2,
-                openTheme: false,
                 isCollapsed: false
             };
         },
+        computed: {
+          rotateIcon () {
+            return [
+              'menu-icon',
+              this.isCollapsed ? 'rotate-icon' : ''
+            ];
+          },
+          menuitemClasses () {
+            return [
+              'menu-item',
+              this.isCollapsed ? 'collapsed-menu' : ''
+            ];
+          }
+        },
         methods: {  // 中英文切换
+          collapsedSider () {
+            this.$refs.side1.toggleCollapse();
+          },
           changeLocale() {
             let locale = this.$i18n.locale;
             locale === 'zh' ? this.$i18n.locale = 'en' : this.$i18n.locale = 'zh';
@@ -156,5 +166,36 @@
     }
     .content-expand {
         margin-left: 64px;  /*展开时距离左边64px*/
+    }
+    .menu-icon{
+      transition: all .3s;
+    }
+    .rotate-icon{
+      transform: rotate(-90deg);
+    }
+    .menu-item span{
+      display: inline-block;
+      overflow: hidden;
+      width: 69px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      vertical-align: bottom;
+      transition: width .2s ease .2s;
+    }
+    .menu-item i{
+      transform: translateX(0px);
+      transition: font-size .2s ease, transform .2s ease;
+      vertical-align: middle;
+      font-size: 16px;
+    }
+    .collapsed-menu span{
+      width: 0px;
+      transition: width .2s ease;
+    }
+    .collapsed-menu i{
+      transform: translateX(5px);
+      transition: font-size .2s ease .2s, transform .2s ease .2s;
+      vertical-align: middle;
+      font-size: 22px;
     }
 </style>
