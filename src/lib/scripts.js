@@ -254,6 +254,10 @@ function init () {
     $(".sidebar-nav .boxes, .sidebar-nav .rows").hide();
     $(this).next().slideDown()
   });
+  $("#vertical").bind("click",function(){
+    alert(1111);
+  });
+
   removeElm();
   configurationElm();
   gridSystemGenerator();

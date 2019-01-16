@@ -14,7 +14,7 @@ router.beforeEach((to, from, next) => {
   const token = getToken();  // 获取token值
   if (token) {
       store.dispatch('authorization', token).then(() => {
-      if (to.name === 'login') next({ name: 'AppDesigner' });
+      if (to.name === 'login') next({ name: 'app' });
       else next();
     }).catch(() => {
       setToken('');

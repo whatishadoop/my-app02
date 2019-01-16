@@ -1,5 +1,3 @@
-// The Vue build version to load with the `import` command
-// (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import App from './App';
 // 引入路由
@@ -9,11 +7,9 @@ import store from './store';
 // 引入国际化
 import i18n from './i18n';
 // 引入mintui
-import Mint from 'mint-ui';
-import 'mint-ui/lib/style.css';
+import './plugins/mintui.js';
 // 引入iview
-import iview from 'iview';
-import 'iview/dist/styles/iview.css';
+import './plugins/iview.js';
 // 引入uuid生成器
 import uuid from 'uuid-js';
 // 引入echarts
@@ -27,8 +23,6 @@ Vue.config.productionTip = false;
 Vue.prototype.$echarts = echarts;
 Vue.prototype.$uuid = uuid;
 
-Vue.use(Mint);
-Vue.use(iview);
 Vue.use(webAppPlugin);
 
 /* eslint-disable no-new */

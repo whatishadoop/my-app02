@@ -3,6 +3,11 @@
     <input v-model="userName" />
     <input type="password" v-model="password"/>
     <button @click="handleSubmit">登录</button>
+    <!-- 这里添加了一个div，并增加了200像素的间距 -->
+    <div style="margin: 200px;">
+      <DatePicker type="date" placeholder="Select date" style="width: 200px"></DatePicker>
+      {{ $t("message.title") }}
+    </div>
   </div>
 </template>
 <script>
@@ -26,7 +31,7 @@ export default {
       }).then(() => {
         console.log('success!!');
         this.$router.push({   // 登录成功后进行页面跳转
-          name: 'AppDesigner'
+          name: 'app'
         });
       }).catch(error => {
         console.log(error);

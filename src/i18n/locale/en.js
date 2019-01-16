@@ -1,6 +1,7 @@
 export default {
   message: {
-    title: 'helper doc'
+    title: 'helpedoc',
+    language: 'language'
   },
   placeholder: {
     enter: 'Please type in your favorite brand'

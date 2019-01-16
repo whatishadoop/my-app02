@@ -1,73 +1,6 @@
 <template>
   <div>
-    <div class="navbar navbar-inverse navbar-fixed-top navbar-layoutit">
-      <div class="navbar-header">
-        <button data-target="navbar-collapse" data-toggle="collapse" class="navbar-toggle" type="button">
-          <span class="glyphicon-bar"></span>
-          <span class="glyphicon-bar"></span>
-          <span class="glyphicon-bar"></span>
-        </button>
-        <a class="navbar-brand" href="#">
-          Dwebapp
-        </a>
-      </div>
-      <div class="collapse navbar-collapse">
-
-        <ul class="nav pull-right">
-          <li>
-
-            <div class="btn-group btn-donate pull-right"></div>
-
-            <div class="btn-group">
-              <a class="btn btn-xs btn-primary active" href="javascript:void(0)" @click="changeLocale"><i
-                class="glyphicon-globe glyphicon"></i>
-                中文/英文
-              </a>
-              <button @click="changeLocale" role="button" data-toggle="modal" data-target="#feedbackModal" id="feedback"
-                      class="btn btn-xs btn-primary active"><i class="glyphicon-comment glyphicon"></i>
-                {{$t("message.title")}}
-              </button>
-            </div>
-          </li>
-        </ul>
-        <ul class="nav" id="menu-layoutit">
-          <li>
-            <div class="btn-group" data-toggle="buttons-radio">
-              <button type="button" id="edit" class="btn btn-xs btn-primary active"><i
-                class="glyphicon glyphicon-edit "></i>
-                编辑
-              </button>
-              <button type="button" class="btn btn-xs btn-primary" id="devpreview">
-                <i class="glyphicon-eye-close glyphicon"></i>
-                开发
-              </button>
-              <button type="button" class="btn btn-xs btn-primary" id="sourcepreview">
-                <i class="glyphicon-eye-open glyphicon"></i>
-                预览
-              </button>
-            </div>
-            <div class="btn-group">
-              <button type="button" class="btn btn-xs btn-primary" id="button-download-modal"
-                      data-target="#downloadModal"
-                      role="button" data-toggle="modal"><i class="glyphicon-chevron-down glyphicon"></i>
-                下载
-              </button>
-              <button class="btn btn-xs btn-primary" id="add" @click="addPage">
-                <i class="glyphicon-file glyphicon"></i>
-                加载
-              </button>
-              <button class="btn btn-xs btn-primary" href="#clear" id="clear">
-                <i class="glyphicon-trash glyphicon"></i>
-                清空
-              </button>
-            </div>
-          </li>
-        </ul>
-      </div>
-      <!--/.navbar-collapse -->
-    </div>
     <!--/.navbar-fixed-top -->
-
     <div class="container">
       <div class="row">
         <div class="">
@@ -77,11 +10,9 @@
               <li class="nav-header">
                 <div class="pull-right popover-info">
                   <i class="glyphicon glyphicon-question-sign"></i>
-
                   <div class="popover fade right">
                     <div class="arrow"></div>
                     <h3 class="popover-title">帮助</h3>
-
                     <div class="popover-content">
                       xxx
                     </div>
@@ -97,10 +28,9 @@
                     删除
                   </a>
                   <span class="drag label label-default">
-								<i class="glyphicon glyphicon-move"></i>
-								拖动
-							</span>
-
+								     <i class="glyphicon glyphicon-move"></i>
+								      拖动
+							    </span>
                   <div class="preview">
                     12
                   </div>
@@ -156,10 +86,9 @@
                     删除
                   </a>
                   <span class="drag label label-default">
-								<i class="glyphicon glyphicon-move"></i>
-								拖动
-							</span>
-
+                  <i class="glyphicon glyphicon-move"></i>
+                  拖动
+                </span>
                   <div class="preview">
                     4 4 4
                   </div>
@@ -305,30 +234,7 @@
 								拖动
 							</span>
                   <span class="configuration">
-								<span class="btn-group btn-group-xs">
-									<a class="btn btn-default dropdown-toggle" data-toggle="dropdown" href="#">
-                                      尺寸
-                                      <span class="caret"></span>
-                                    </a>
-									<ul class="dropdown-menu">
-                                      <li class="active">
-                                        <a href="#" rel="">默认</a>
-                                      </li>
-                                      <li class="">
-                                        <a href="#" rel="btn-group-lg">大</a>
-                                      </li>
-                                      <li class="">
-                                        <a href="#" rel="btn-group-md">中</a>
-                                      </li>
-                                      <li class="">
-                                        <a href="#" rel="btn-group-sm">小</a>
-                                      </li>
-                                      <li class="">
-                                        <a href="#" rel="btn-group-xs">微型</a>
-                                      </li>
-                                    </ul>
-								</span>
-								<a class="btn btn-xs btn-default" href="#" rel="btn-group-vertical">竖向</a>
+								  <span href="javascript:void(0)" id="vertical">竖向</span>
 							</span>
 
                   <div class="preview">按钮组</div>
@@ -393,6 +299,30 @@
           </div>
         </div>
         <!--/span-->
+        <div class="navbar navbar-inverse navbar-layoutit">
+          <div class="collapse navbar-collapse">
+            <ul class="nav" id="menu-layoutit">
+              <li>
+                <div class="btn-group">
+                  <button type="button" class="btn btn-xs btn-primary" id="button-download-modal"
+                          data-target="#downloadModal"
+                          role="button" data-toggle="modal"><i class="glyphicon-chevron-down glyphicon"></i>
+                    下载
+                  </button>
+                  <button class="btn btn-xs btn-primary" id="add" @click="addPage">
+                    <i class="glyphicon-file glyphicon"></i>
+                    加载
+                  </button>
+                  <button class="btn btn-xs btn-primary" href="#clear" id="clear">
+                    <i class="glyphicon-trash glyphicon"></i>
+                    清空
+                  </button>
+                </div>
+              </li>
+            </ul>
+          </div>
+          <!--/.navbar-collapse -->
+        </div>
         <div style="min-height: 754px;" class="demo ui-sortable">
           内容区
         </div>
@@ -431,6 +361,8 @@
         <!-- /.modal-content -->
       </div>
     </div>
+    <!--设置:closable="false" 取消差按钮-->
+    <Drawer title="选择配色" v-model="openTheme" :closable="false"></Drawer>
   </div>
 </template>
 
@@ -441,26 +373,25 @@
     data() {
       return {  // 普通属性国际化切换无效果
         chart: '<v-barchart></v-barchart>',
-        chart2: '<div v-world:wbs17022.hehe.haha></div>'
+        chart2: '<div v-world:wbs17022.hehe.haha></div>',
+        openTheme: false
       };
     },
     methods: {
+      test() {
+        console.log(1111);
+      },
       addPage() {
         // 先清空再加载
         $('.demo').children().remove();
         $('.demo').html('<div id="mount-point"></div>');
         // 模拟从后台读取页面
         const strs = '<div renderstate="O" class="lyrow ui-draggable" style="display: block;"><a href="javascript:void(0)" class="remove label label-danger"><i class="glyphicon-remove glyphicon"></i>删除</a> <span class="drag label label-default"><i class="glyphicon glyphicon-move"></i>拖动</span><div class="preview"><input value="12" type="text" class="form-control"></div><div class="view"><div class="row clearfix"><div class="col-md-12 column"><barchart></barchart></div></div></div></div>';
-
         // 动态挂载页面
         var MyComponent = Vue.extend({
           template: strs
         });
         new MyComponent().$mount('#mount-point');
-      },
-      changeLocale() {
-        let locale = this.$i18n.locale;
-        locale === 'zh' ? this.$i18n.locale = 'en' : this.$i18n.locale = 'zh';
       }
     },
     computed: {
@@ -544,4 +475,8 @@
     width: 100%
     bottom: 0
     left: 0
+  .sidebar-nav  /*修改编辑器左侧样式*/
+    width: 240px
+    height: 100%;
+    top: 60px
 </style>

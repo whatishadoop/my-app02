@@ -22,5 +22,20 @@ export default [
   {
     path: '*',
     component: resolve => require(['views/error_404.vue'], resolve)
+  },
+  {
+    path: '/app',
+    name: 'app',
+    component: resolve => require(['views/App.vue'], resolve)
+  },
+  {
+    path: '/dev',
+    name: 'dev',
+    component: resolve => require(['views/Dev.vue'], resolve)
+  },
+  {
+    path: '/manage',
+    name: 'manage',
+    component: resolve => require(['views/Manage.vue'], resolve)
   }
 ];
