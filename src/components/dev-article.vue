@@ -3,10 +3,10 @@
         <Header class="header">
             <!--layout + grid布局组合使用-->
             <Row>
-                <Col span="4" offset="1">
+                <Col span="4">
                   <Icon @click.native="collapsedSider" :class="rotateIcon" type="md-menu" size="24"></Icon>
                 </Col>
-                <Col span="13">
+                <Col span="10" offset="2">
                     <!--mode="horizontal"设置菜单水平排列，菜单高亮显示:active-name-->
                     <Menu mode="horizontal" :active-name="activeName">
                         <!--to为mune自带路由导航-->
@@ -15,10 +15,10 @@
                         <MenuItem name="/dev" to="/dev">模板管理</MenuItem>
                     </Menu>
                 </Col>
-                <Col span="6">
+                <Col span="8">
                     <!-- row中继续嵌套row,内部row仍然占用24个单元格-->
                     <Row>
-                        <Col span="4" offset="2">
+                        <Col span="2" offset="6">
                             <!--带头像的下拉菜单-->
                             <Dropdown>
                               <Avatar style="background-color: #2d8cf0" icon="ios-person"/>
@@ -35,10 +35,13 @@
                                 </DropdownMenu>
                             </Dropdown>
                         </Col>
-                        <Col span="6">
+                        <Col span="2">
                             <Icon type="ios-chatboxes" size="24" @click="changeLocale"/>
                         </Col>
-                        <Col span="6">
+                        <Col span="14">
+                            <Button @click="downloadPageClick">保存</Button>
+                            <Button @click="loadPageClick">加载</Button>
+                            <Button @click="cleanContentClick">取消</Button>
                             <Button>{{$t("message.title")}}</Button>
                         </Col>
                      </Row>
@@ -108,6 +111,15 @@
           }
         },
         methods: {  // 中英文切换
+          downloadPageClick () {
+            this.$bus.$emit('on-downloadPage');
+          },
+          loadPageClick () {
+            this.$bus.$emit('on-loadPage');
+          },
+          cleanContentClick () {
+            this.$bus.$emit('on-cleanContent');
+          },
           collapsedSider () {
             this.$refs.side1.toggleCollapse();
           },

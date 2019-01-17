@@ -108,12 +108,20 @@ function configurationElm(e, t) {
     n.addClass($(this).attr("rel"))
   })
 }
-function removeElm() {
+function removeElm(rootObj) {
   $(".demo").delegate(".remove", "click", function (e) {
     e.preventDefault();
+    // 删除时获取对应组件id
+    var cid = $(this).parent().find('[obj=component]').attr("cid")
     $(this).parent().remove();
     if (!$(".demo .lyrow").length > 0) {
       clearDemo()
+    }
+    if (cid) {
+      // 删除window对象绑定组件对象
+      delete window[cid];
+      // 向当前视图子组件发送广播,删除对应组件实例，
+      rootObj.$bus.$emit('on-deleteComponent', cid);
     }
   })
 }
@@ -210,18 +218,21 @@ $(window).resize(function () {
   $("body").css("min-height", $(window).height() - 90);
   $(".demo").css("min-height", $(window).height() - 160)
 });
-function init () {
+
+function init (rootObj) {
   $("body").css("min-height", $(window).height() - 90);
   $(".demo").css("min-height", $(window).height() - 160);
-  $("[data-target=#downloadModal]").click(function (e) {
-    e.preventDefault();
-    downloadLayoutSrc()
-  });
+  // $("[data-target=#downloadModal]").click(function (e) {
+  //   e.preventDefault();
+  //   downloadLayoutSrc()
+  // });
   $("#download").click(function () {
+    alert('download');
     downloadLayout();
     return false
   });
   $("#downloadhtml").click(function () {
+    alert('downloadhtml');
     downloadHtmlLayout();
     return false
   });
@@ -254,17 +265,16 @@ function init () {
     $(".sidebar-nav .boxes, .sidebar-nav .rows").hide();
     $(this).next().slideDown()
   });
-  $("#vertical").bind("click",function(){
-    alert(1111);
-  });
 
-  removeElm();
+  removeElm(rootObj);
   configurationElm();
   gridSystemGenerator();
-  setInterval(function () {
-    handleSaveLayout()
-  }, timerSave)
+  // setInterval(function () {
+  //   handleSaveLayout()
+  // }, timerSave)
 }
 export {
-  init
+  init,
+  downloadLayoutSrc,
+  clearDemo
 }

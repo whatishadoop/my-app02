@@ -1,11 +1,12 @@
 <template>
-  <div :cache="cache" ctype="barchart" obj="component">
+  <div :cache="cache" ctype="barchart" obj="component" :cid="cid">
     <div :id="chartid" :style="{width: '200px', height: '200px',border: '1px dashed #F00'}"></div>
-    <div>组件ID: {{id}}</div>
+    <div>组件ID: {{'C' + this._uid}}</div>
     <button @click="test(id)">交互测试</button><br/>
     执行js: <textarea v-model="executejs"></textarea>
     <div>交互数据: {{data}}</div>
     <Button @click="attraConfigClick">编辑</Button>
+    <Button @click="attraConfigClick02">编辑02</Button>
   </div>
 </template>
 
@@ -13,6 +14,7 @@
   export default {
     data() {
       return {
+        cid: 'C' + this._uid,
         msg: 'Welcome 222',
         chartid: this.$uuid.create().hex,
         cache: '',
@@ -22,6 +24,7 @@
     },
     props: ['id'],  // 框架传入
     mounted() {
+      console.log(this._uid);
       this.drawLine();
       // console.log(this.$data.chartid);
       let newObj = {};
@@ -29,14 +32,23 @@
       newObj.chartid = this.$data.chartid;
       this.$data.cache = JSON.stringify(newObj);
       // console.log(this.$data.cache);
+
+      // 删除视图时，同时删除对应的vue组件实例
+      this.$bus.$on('on-deleteComponent', cid => {
+        if (cid === this.cid) {
+          this.$destroy();
+        }
+      });
     },
     methods: {
       attraConfigClick () {
-        this.$bus.$emit('on-attraConfig', true);
-        console.log('attraConfigClick');
+        this.$bus.$emit('on-attraConfig', this, 'barchartconfig');
+      },
+      attraConfigClick02 () {
+        this.$bus.$emit('on-attraConfig', this, 'barchartconfig02');
       },
       test(aaa) {
-        // 测试用: window.C4375ce51a16242cf88dbfee89dfcd347.test2('aaaaa');
+        // 测试用: window.C48.test2('GGG');
         var foo = window;
         foo.eval(this.executejs);
       },
@@ -62,6 +74,9 @@
           }]
         });
       }
+    },
+    destroyed() {
+      console.log('删除组件');
     }
   };
 </script>

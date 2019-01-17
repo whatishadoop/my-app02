@@ -299,32 +299,8 @@
           </div>
         </div>
         <!--/span-->
-        <div class="navbar navbar-inverse navbar-layoutit">
-          <div class="collapse navbar-collapse">
-            <ul class="nav" id="menu-layoutit">
-              <li>
-                <div class="btn-group">
-                  <button type="button" class="btn btn-xs btn-primary" id="button-download-modal"
-                          data-target="#downloadModal"
-                          role="button" data-toggle="modal"><i class="glyphicon-chevron-down glyphicon"></i>
-                    下载
-                  </button>
-                  <button class="btn btn-xs btn-primary" id="add" @click="addPage">
-                    <i class="glyphicon-file glyphicon"></i>
-                    加载
-                  </button>
-                  <button class="btn btn-xs btn-primary" href="#clear" id="clear">
-                    <i class="glyphicon-trash glyphicon"></i>
-                    清空
-                  </button>
-                </div>
-              </li>
-            </ul>
-          </div>
-          <!--/.navbar-collapse -->
-        </div>
         <div style="min-height: 754px;" class="demo ui-sortable">
-          内容区
+
         </div>
         <!--/span-->
         <div id="download-layout">
@@ -366,93 +342,32 @@
       title="Create"
       v-model="openTheme"
       width="500"
-      :mask=false
+      :mask-style="maskstyle"
       :styles="styles"
     >
-      <Form :model="formData">
-        <Row :gutter="32">
-          <Col span="12">
-            <FormItem label="Name" label-position="top">
-              <Input v-model="formData.name" placeholder="please enter user name" />
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="Url" label-position="top">
-              <Input v-model="formData.url" placeholder="please enter url">
-                <span slot="prepend">http://</span>
-                <span slot="append">.com</span>
-              </Input>
-            </FormItem>
-          </Col>
-        </Row>
-        <Row :gutter="32">
-          <Col span="12">
-            <FormItem label="Owner" label-position="top">
-              <Select v-model="formData.owner" placeholder="please select an owner">
-                <Option value="jobs">Steven Paul Jobs</Option>
-                <Option value="ive">Sir Jonathan Paul Ive</Option>
-              </Select>
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="Type" label-position="top">
-              <Select v-model="formData.type" placeholder="please choose the type">
-                <Option value="private">Private</Option>
-                <Option value="public">Public</Option>
-              </Select>
-            </FormItem>
-          </Col>
-        </Row>
-        <Row :gutter="32">
-          <Col span="12">
-            <FormItem label="Approver" label-position="top">
-              <Select v-model="formData.approver" placeholder="please choose the approver">
-                <Option value="jobs">Steven Paul Jobs</Option>
-                <Option value="ive">Sir Jonathan Paul Ive</Option>
-              </Select>
-            </FormItem>
-          </Col>
-          <Col span="12">
-            <FormItem label="DateTime" label-position="top">
-              <DatePicker v-model="formData.date" type="daterange" placeholder="please select the date" style="display: block" placement="bottom-end"></DatePicker>
-            </FormItem>
-          </Col>
-        </Row>
-        <FormItem label="Description" label-position="top">
-          <Input type="textarea" v-model="formData.desc" :rows="4" placeholder="please enter the description" />
-        </FormItem>
-      </Form>
-      <div class="demo-drawer-footer">
-        <Button style="margin-right: 8px" @click="value3 = false">Cancel</Button>
-        <Button type="primary" @click="value3 = false">Submit</Button>
-      </div>
+      <component :is="currentView"></component>
     </Drawer>
   </div>
 </template>
 
 <script type="text/ecmascript-6">
   import Vue from 'vue';
-  import {init} from '../lib/scripts';
+  import {init, downloadLayoutSrc, clearDemo} from '../lib/scripts';
   export default {
     data() {
       return {  // 普通属性国际化切换无效果
         chart: '<v-barchart></v-barchart>',
         chart2: '<div v-world:wbs17022.hehe.haha></div>',
+        currentView: '',
         openTheme: false,
+        maskstyle: {
+          background: 'transparent'
+        },
         styles: {
           height: 'calc(100% - 55px)',
           overflow: 'auto',
           paddingBottom: '53px',
           position: 'static'
-        },
-        formData: {
-          name: '',
-          url: '',
-          owner: '',
-          type: '',
-          approver: '',
-          date: '',
-          desc: ''
         }
       };
     },
@@ -476,11 +391,28 @@
       }
     },
     mounted: function () {
-      this.$bus.$on('on-attraConfig', mes => {
-        console.log(mes);
-        this.openTheme = mes;
+      // 弹出属性配置栏
+      this.$bus.$on('on-attraConfig', (componentObj, conifgComponentName) => {
+        this.currentView = conifgComponentName;
+        console.log(componentObj._uid);
+        this.openTheme = true;
       });
-      init();
+      // 保存页面
+      this.$bus.$on('on-downloadPage', () => {
+        console.log('on-downloadPage');
+        downloadLayoutSrc();
+      });
+      // 加载页面
+      this.$bus.$on('on-loadPage', () => {
+        console.log('on-loadPage');
+        this.addPage();
+      });
+      // 清空编辑区域内容
+      this.$bus.$on('on-cleanContent', () => {
+        console.log('on-cleanContent');
+        clearDemo();
+      });
+      init(this);
       let self = this;
       $('.demo, .demo .column').sortable({
         connectWith: '.demo', // 只能放在.demo区域内，若布局嵌套设置为.column
@@ -507,29 +439,33 @@
                 let str = '' + self.$uuid.create();
                 let reg = new RegExp('-', 'g');
                 let newstr = str.replace(reg, '');
-                let cusComponentId = 'C' + newstr;
-                console.log(cusComponentId);
+                // 创建临时组件id
+                let tmpComponentId = 'C' + newstr;
                 // 获取组件类型
                 let moduleType = curModuleObj.find('.cus_component').attr('type');
-                curModuleObj.find('.cus_component').attr('id', cusComponentId);
+                curModuleObj.find('.cus_component').attr('id', tmpComponentId);
                 self.$nextTick(function () {
-                  const strs = `<${moduleType} ref="${cusComponentId}" id="${cusComponentId}"></${moduleType}>`;
+                  const strs = `<${moduleType} ref="${tmpComponentId}"></${moduleType}>`;
                   let MyComponent = Vue.extend({
                     template: strs,
                     mounted: function () {
-                      if (this.$refs[cusComponentId]) {
+                      if (this.$refs[tmpComponentId]) {
                         // 向windows注册组件对象
-                        window[cusComponentId] = this.$refs[cusComponentId];
+                        let componentUid = 'C' + this.$refs[tmpComponentId]._uid;
+                        // window[cusComponentId] = this.$refs[cusComponentId];
+                        window[componentUid] = this.$refs[tmpComponentId];
                       }
                     },
                     updated: function () {
                       // 异步加载组件，初次触发updated事件
-                      if (this.$refs[cusComponentId]) {
-                        window[cusComponentId] = this.$refs[cusComponentId];
+                      if (this.$refs[tmpComponentId]) {
+                        let componentUid = 'C' + this.$refs[tmpComponentId]._uid;
+                        // window[cusComponentId] = this.$refs[cusComponentId];
+                        window[componentUid] = this.$refs[tmpComponentId];
                       }
                     }
                   });
-                  new MyComponent().$mount('#' + cusComponentId);
+                  new MyComponent().$mount('#' + tmpComponentId);
                   // 挂载后渲染状态设置为O 旧组件状态
                   curModuleObj.attr('renderstate', 'O');
                 });
@@ -559,14 +495,4 @@
     width: 240px
     height: 100%;
     top: 60px
-  .demo-drawer-footer{  /*弹出抽屉设置*/
-    width: 100%;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    border-top: 1px solid #e8e8e8;
-    padding: 10px 16px;
-    text-align: right;
-    background: #fff;
-  }
 </style>
