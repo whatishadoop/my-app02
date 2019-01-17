@@ -11,6 +11,7 @@
                     <Menu mode="horizontal" :active-name="activeName">
                         <!--to为mune自带路由导航-->
                         <MenuItem name="/app" to="/app">设计小程序</MenuItem>
+                        <MenuItem name="/assemble" to="/assemble">组装小程序</MenuItem>
                         <MenuItem name="/manage" to="/manage">管理小程序</MenuItem>
                         <MenuItem name="/dev" to="/dev">模板管理</MenuItem>
                     </Menu>

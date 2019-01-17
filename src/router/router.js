@@ -37,5 +37,10 @@ export default [
     path: '/manage',
     name: 'manage',
     component: resolve => require(['views/Manage.vue'], resolve)
+  },
+  {
+    path: '/assemble',
+    name: 'assemble',
+    component: resolve => require(['views/Assemble.vue'], resolve)
   }
 ];
